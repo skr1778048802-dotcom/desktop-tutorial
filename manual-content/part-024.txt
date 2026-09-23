@@ -1,0 +1,750 @@
+ = {
+        n1: ["公共座席及充电位｜近103、107、108"],
+        n2: ["公共办公点｜近114、115、118、119、120、121、124、126"],
+        n3: ["公共办公点｜近144、149及远端候机区"],
+        s1: ["公共办公点｜近156、160"],
+        s2: ["公共办公点｜近184、186、187"],
+        s3: ["公共办公点｜近189、190、193"],
+        central: [
+          "中转中心",
+          "中国南方航空木棉阁｜使用条件待核验",
+          "东航贵宾休息室｜近156—194、128—149导向方向",
+        ],
+        south: ["南集中区公共候机资源"],
+        north: ["北集中区公共候机资源"],
+        outside: ["安检外等候区与服务台"],
+      };
+      const publicPoints = [
+        {
+          id: "pub-n1",
+          zone: "n1",
+          name: "北一公共办公区",
+          gates: "近103、107、108",
+          photos: [42, 43, 44],
+          desc: "公共座席与充电区，适合短时邮件、文件处理。",
+        },
+        {
+          id: "pub-n2",
+          zone: "n2",
+          name: "北二公共办公区",
+          gates: "近114、115、118、119、120、121、124、126",
+          photos: [44, 45, 46],
+          desc: "靠近候机区，优先推荐给时间窗口较短的旅客。",
+        },
+        {
+          id: "pub-n3",
+          zone: "n3",
+          name: "北三公共办公区",
+          gates: "近144、149及远端候机区",
+          photos: [47, 48, 49],
+          desc: "远端候机区公共座席，适合登机前短时处理事务。",
+        },
+        {
+          id: "pub-s1",
+          zone: "s1",
+          name: "南一公共办公区",
+          gates: "近156、160",
+          photos: [49, 50, 51],
+          desc: "无需额外消费，适合临近登机口的安全办公。",
+        },
+        {
+          id: "pub-s2",
+          zone: "s2",
+          name: "南二公共办公区",
+          gates: "近184、186、187",
+          photos: [52, 53, 54],
+          desc: "含座席与充电区域，可完成邮件和行程确认。",
+        },
+        {
+          id: "pub-s3",
+          zone: "s3",
+          name: "南三公共办公区",
+          gates: "近189、190、193",
+          photos: [54, 55, 56],
+          desc: "远端候机区公共座席，适合短时办公和等待。",
+        },
+        {
+          id: "pub-central",
+          zone: "central",
+          name: "中央公共休息区",
+          gates: "中央集中区",
+          photos: [56, 57, 58],
+          desc: "服务不同方向旅客，无需深入指廊即可短暂停留。",
+        },
+        {
+          id: "transfer",
+          zone: "central",
+          name: "中转中心",
+          gates: "中央集中区",
+          photos: [51, 59, 60],
+          desc: "适合中转期间处理简要事务与衔接下一程。",
+        },
+      ];
+      const $ = (s) => document.querySelector(s),
+        $$ = (s) => [...document.querySelectorAll(s)];
+      const state = {
+        traveller: "departure",
+        need: "work",
+        zone: "n2",
+        selected: "seesaw-n2",
+        capacity: "waiting",
+        mapFilter: "all",
+        publicZone: "n2",
+        timer: null,
+        left: 0,
+      };
+      function toast(t) {
+        const x = $("#toast");
+        x.textContent = t;
+        x.classList.add("show");
+        setTimeout(() => x.classList.remove("show"), 2400);
+      }
+      function zoneName(k) {
+        return zones[k].name;
+      }
+      function currentShop() {
+        return shops.find((x) => x.id === state.selected) || shops[0];
+      }
+      function img(p) {
+        return I(`p${p}.jpg`);
+      }
+      function setOptions() {
+        const o = Object.entries(zones)
+          .map(([k, v]) => `<option value="${k}">${v.name}</option>`)
+          .join("");
+        $("#zone").innerHTML = o;
+        $("#arrivalZone").innerHTML = o;
+        $("#zone").value = state.zone;
+        $("#arrivalZone").value = "central";
+      }
+      function minutes(shop) {
+        if (state.traveller === "arrival")
+          return +$("#arrivalStay").value || 45;
+        const time = $("#boarding").value;
+        if (!time) return "—";
+        const [h, m] = time.split(":").map(Number),
+          n = new Date(),
+          t = new Date();
+        t.setHours(h, m, 0, 0);
+        if (t < n) t.setDate(t.getDate() + 1);
+        const transit =
+          shop.zone === state.zone
+            ? 8
+            : shop.zone === "central" || state.zone === "central"
+              ? 16
+              : 24;
+        return Math.max(
+          0,
+          Math.round((t - n) / 60000) - +$("#buffer").value - transit,
+        );
+      }
+      function score(s) {
+        let x =
+          (s.zone === state.zone ? 40 : 0) +
+          (s.need.includes(state.need) ? 30 : 0);
+        if (state.traveller === "arrival" && s.need.includes("arrival"))
+          x += 50;
+        if (state.traveller === "departure") {
+          let m = minutes(s);
+          if (typeof m === "number") x += Math.max(-30, Math.min(20, m));
+        }
+        return x;
+      }
+      function recommendations() {
+        let r = shops
+          .filter(
+            (s) =>
+              s.need.includes(state.need) ||
+              (state.traveller === "arrival" && s.need.includes("arrival")),
+          )
+          .sort((a, b) => score(b) - score(a));
+        return r.slice(0, 3);
+      }
+      function updateHome() {
+        let arrival = state.traveller === "arrival";
+        $("#departureForm").classList.toggle("hidden", arrival);
+        $("#arrivalForm").classList.toggle("hidden", !arrival);
+        $("#bufferWrap").classList.toggle("hidden", arrival);
+        $("#homeStatus").textContent = arrival
+          ? "到达旅客｜请确认当前区域"
+          : "出发旅客｜请录入登机信息";
+        $("#homeStatusText").textContent = arrival
+          ? "将优先呈现到达出口与中央区域的商务短停资源。"
+          : "将结合登机时间、登机口和安全缓冲生成建议。";
+        state.zone = arrival
+          ? $("#arrivalZone").value
+          : $("#zone").value || state.zone;
+        $("#zone").value = state.zone;
+        renderAll();
+      }
+      function renderReco() {
+        const list = recommendations();
+        $("#recommendInfo").textContent =
+          state.traveller === "arrival"
+            ? `以${zoneName(state.zone)}为起点，优先到达短停资源。`
+            : `以${zoneName(state.zone)}为起点，已预留${$("#buffer").value}分钟安全缓冲。`;
+        $("#recoList").innerHTML = list
+          .map((s, i) => {
+            let m = minutes(s),
+              meta =
+                state.traveller === "arrival"
+                  ? `预计停留 ${m} 分钟`
+                  : m === "—"
+                    ? "请先填写登机时间"
+                    : `可安排约 ${m} 分钟`;
+            return `<article class="reco"><span class="rank">0${i + 1}</span><img src="${img(s.photos[0])}" alt="${s.name}现场照片"><div><b>${s.name}｜近 ${s.gates}</b><span>${zoneName(s.zone)}｜登机口导向 ${s.gates}</span><span>${s.desc}</span><span class="tag green">${meta}</span></div><button class="btn primary sm" data-plan="${s.id}">纳入行程</button></article>`;
+          })
+          .join("");
+      }
+      function mapXY(s) {
+        let base = zones[s.zone].xy;
+        let n = (shops.filter((x) => x.zone === s.zone).indexOf(s) - 1) * 1.5;
+        return [base[0] + n, base[1] + n];
+      }
+      function corridorRoute(fromZone, targetZone, target) {
+        if (fromZone === targetZone) return [zones[fromZone].xy, target];
+        const from = (
+          corridorSpines[fromZone] || [zones.central.xy, zones[fromZone].xy]
+        )
+          .slice()
+          .reverse();
+        const to = corridorSpines[targetZone] || [
+          zones.central.xy,
+          zones[targetZone].xy,
+        ];
+        const points = [...from, ...to.slice(1), target];
+        return points.filter(
+          (point, index) =>
+            index === 0 ||
+            point[0] !== points[index - 1][0] ||
+            point[1] !== points[index - 1][1],
+        );
+      }
+      function renderMap() {
+        const sel = currentShop(),
+          from = zones[state.zone].xy,
+          to = mapXY(sel);
+        $("#you").style.left = from[0] + "%";
+        $("#you").style.top = from[1] + "%";
+        const points = corridorRoute(state.zone, sel.zone, to);
+        const route = points
+          .map((point, index) => `${index ? "L" : "M"}${point[0]} ${point[1]}`)
+          .join(" ");
+        $("#routePath").setAttribute("d", route);
+        $("#routeGlow").setAttribute("d", route);
+        $("#routeEnd").setAttribute("cx", to[0]);
+        $("#routeEnd").setAttribute("cy", to[1]);
+        $("#mapNote").textContent =
+          `路线常亮｜${zoneName(state.zone)} → ${sel.name}`;
+        let visible = shops.filter(
+          (s) =>
+            state.mapFilter === "all" ||
+            state.mapFilter === "merchant" ||
+            (state.mapFilter === "local" && s.zone === state.zone),
+        );
+        let pubs = publicPoints.filter(
+          (p) =>
+            state.mapFilter === "all" ||
+            state.mapFilter === "public" ||
+            (state.mapFilter === "local" && p.zone === state.zone),
+        );
+        $("#mapPins").innerHTML =
+          visible
+            .map((s) => {
+              let [x, y] = mapXY(s);
+              return `<button class="map-pin ${s.id === sel.id ? "active" : ""}" style="left:${x}%;top:${y}%" data-map="${s.id}" aria-label="${s.name}"></button>`;
+            })
+            .join("") +
+          pubs
+            .map((p) => {
+              let [x, y] = zones[p.zone].xy;
+              return `<button class="map-pin public" style="left:${x - 2}%;top:${y + 2}%" data-publicmap="${p.id}" aria-label="${p.name}"></button>`;
+            })
+            .join("");
+        $("#mapDetail").innerHTML =
+          `<img src="${img(sel.photos[0])}" alt="${sel.name}现场照片"><span class="tag">${zoneName(sel.zone)}</span><h3>${sel.name}｜近 ${sel.gates}</h3><p>${sel.desc}</p><p class="micro">登机口导向：${sel.gates}<br>区域级路径已保持常亮，请以现场导向为准。</p><div class="actions"><button class="btn sm" data-photo="shop:${sel.id}">查看现场</button><button class="btn sm" data-corridor="${sel.zone}">查看分区点位</button><button class="btn primary sm" data-plan="${sel.id}">纳入行程</button></div>`;
+        $$("[data-mapfilter]").forEach((b) =>
+          b.classList.toggle("active", b.dataset.mapfilter === state.mapFilter),
+        );
+        bindDynamic();
+      }
+      function renderCorridor(key = state.zone) {
+        state.corridor = key;
+        const tabs = Object.entries(zones)
+          .map(
+            ([k, v]) =>
+              `<button class="corridor-tab ${k === key ? "active" : ""}" data-corridor="${k}">${v.name}</button>`,
+          )
+          .join("");
+        $("#corridorTabs").innerHTML = tabs;
+        $("#corridorTitle").textContent = zones[key].name;
+        $("#corridorDesc").textContent = zones[key].desc;
+        let list = shops.filter((s) => s.zone === key);
+        $("#corridorGrid").innerHTML = list.length
+          ? list
+              .map(
+                (s) =>
+                  `<article class="shop"><img src="${img(s.photos[0])}" alt="${s.name}现场照片"><div class="copy"><span class="gate">登机口导向：${s.gates}</span><h3>${s.name}｜近 ${s.gates}</h3><p>${s.desc}</p><div class="actions"><button class="btn sm" data-photo="shop:${s.id}">查看现场</button><button class="btn sm" data-map="${s.id}">地图位置</button><button class="btn primary sm" data-plan="${s.id}">纳入行程</button></div></div></article>`,
+              )
+              .join("")
+          : '<p class="micro">该区域暂无纳入本期的商户点位，可优先使用下方公共服务资源。</p>';
+        $("#resourceList").innerHTML = (resources[key] || ["公共候机资源"])
+          .map((x) => `<span class="resource">${x}</span>`)
+          .join("");
+        bindDynamic();
+      }
+      function renderPublic(key = state.publicZone) {
+        state.publicZone = key;
+        let p = publicPoints.filter((x) => x.zone === key);
+        $("#publicTabs").innerHTML = Object.entries(zones)
+          .filter(([k]) => publicPoints.some((x) => x.zone === k))
+          .map(
+            ([k, v]) =>
+              `<button class="corridor-tab ${k === key ? "active" : ""}" data-publiczone="${k}">${v.name}</button>`,
+          )
+          .join("");
+        $("#publicTitle").textContent = zoneName(key) + "公共办公区";
+        $("#publicDesc").textContent =
+          "无需额外消费，优先提供给临近登机口且安全办公窗口较短的旅客。";
+        const scenes = [
+          "候机座席",
+          "充电与高桌",
+          "临窗安静座席",
+          "候机区补充空间",
+          "远端休息座席",
+        ];
+        $("#publicGrid").innerHTML =
+          p
+            .flatMap((x) =>
+              x.photos.slice(0, 5).map((photo, i) => ({ x, photo, i })),
+            )
+            .map(
+              ({ x, photo, i }) =>
+                `<article class="shop"><img src="${img(photo)}" alt="${x.name}${scenes[i]}实景照片"><div class="copy"><span class="gate">${scenes[i]}｜近 ${x.gates}</span><h3>${x.name}｜近 ${x.gates}</h3><p>${x.desc}</p><div class="actions"><button class="btn sm" data-photo="public:${x.id}">查看现场</button><button class="btn sm" data-publicmap="${x.id}">地图位置</button></div></div></article>`,
+            )
+            .join("") || '<p class="micro">该区域公共资源信息待补充。</p>';
+        bindDynamic();
+      }
+      function renderJourney() {
+        let s = currentShop(),
+          m = minutes(s),
+          min = typeof m === "number" ? m : 0;
+        if (!state.timer) state.left = Math.max(0, min * 60);
+        $("#journeyShop").textContent = `当前安排｜${s.name}｜近 ${s.gates}`;
+        $("#journeyCopy").textContent =
+          zoneName(state.zone) +
+          " → " +
+          zoneName(s.zone) +
+          "｜临近 " +
+          s.gates +
+          "。" +
+          (state.traveller === "arrival"
+            ? "以到达后的短停安排为准。"
+            : m === "—"
+              ? "请补充登机时间，以计算可用窗口。"
+              : "当前可安排约 " + m + " 分钟，并已保留安全缓冲。");
+        $("#journeyPreview").innerHTML =
+          `<img src="${img(s.photos[0])}" alt="${s.name}现场照片"><div><b>${s.name}</b><span>${zoneName(s.zone)}｜临近 ${s.gates}</span><span>当前目标点位现场图</span></div>`;
+        $("#journeyMeta").innerHTML =
+          `<span>当前区域：${zoneName(state.zone)}</span><span>目标：近 ${s.gates}</span><span>安全窗口：${m === "—" ? "待核验" : m + "分钟"}</span>`;
+        let rows =
+          state.traveller === "arrival"
+            ? [
+                ["01", "抵达后", "由到达出口前往目标商户"],
+                ["02", "商务停留", "按商户接待能力确认服务"],
+                ["03", "后续行程", "根据现场安排离场或衔接"],
+              ]
+            : [
+                ["01", "现在出发", "依据现场导向前往目标区域"],
+                ["02", "开始办公", "抵达后完成核心事务"],
+                [
+                  "03",
+                  "收尾返回",
+                  "保存文件并按现场导向返回" +
+                    ($("#gate").value || "登机口方向"),
+                ],
+              ];
+        $("#timeline").innerHTML = rows
+          .map(
+            (x) =>
+              `<div class="time"><i style="background:#fff;color:#082f54">${x[0]}</i><div><b style="color:#fff">${x[1]}</b><span style="color:#d7e4eb">${x[2]}</span></div></div>`,
+          )
+          .join("");
+        refreshTimer();
+      }
+      function refreshTimer() {
+        let l = Math.max(0, state.left || 0),
+          m = String(Math.floor(l / 60)).padStart(2, "0"),
+          s = String(l % 60).padStart(2, "0");
+        $("#timer").textContent = m + ":" + s;
+        const max = Math.max(
+          1,
+          (typeof minutes(currentShop()) === "number"
+            ? minutes(currentShop())
+            : 1) * 60,
+        );
+        $("#timerMeter").style.width =
+          Math.max(0, Math.min(100, (l / max) * 100)) + "%";
+        $("#timerContext").textContent =
+          l > 0
+            ? `当前窗口尚余 ${m}:${s}，请同步关注航班显示与现场广播。`
+            : "窗口已结束，请立即按现场导向返回登机流程。";
+      }
+      function availabilityRows() {
+        let s = currentShop(),
+          f =
+            state.traveller === "arrival"
+              ? "到达旅客｜当前区域 " + zoneName(state.zone)
+              : `出发旅客｜${$("#boarding").value || "待录入登机时间"}｜${$("#gate").value || "待录入登机口"}`;
+        return [
+          ["行程状态", f],
+          ["航旅纵横", "待接入：航班、登机口与登机状态"],
+          ["商户位置", `${zoneName(s.zone)}｜${s.gates}`],
+          ["商户接口", "待接入：座位余量与接待能力"],
+        ]
+          .map(
+            (x) =>
+              `<div class="data-row"><span>${x[0]}</span><b>${x[1]}</b></div>`,
+          )
+          .join("");
+      }
+      function openAvailability(id) {
+        if (id) state.selected = id;
+        state.capacity = "waiting";
+        let s = currentShop();
+        $("#availabilityName").textContent = `${s.name}｜近 ${s.gates}`;
+        $("#availabilityRows").innerHTML = availabilityRows();
+        $("#availabilityModal").classList.remove("hidden");
+        setCapacity("waiting");
+      }
+      function setCapacity(v) {
+        state.capacity = v;
+        let ring = $("#statusRing"),
+          title = $("#availabilityState"),
+          sub = $("#availabilitySub"),
+          reserve = $("#reserve");
+        ring.classList.remove("full");
+        reserve.classList.add("hidden");
+        if (v === "waiting") {
+          ring.textContent = "待查询";
+          title.textContent = "正在等待商户接口返回";
+          sub.textContent = "点击查询接待能力，查看原型演示流程。";
+        } else if (v === "full") {
+          ring.textContent = "暂满";
+          ring.classList.add("full");
+          title.textContent = "该时段暂无法接待";
+          sub.textContent = "可返回附近优选，选择其他可服务商户。";
+        } else {
+          ring.textContent = "可预定";
+          title.textContent = "可承接本次商务停留";
+          sub.textContent = "演示状态：可进入一键预定流程。";
+          reserve.classList.remove("hidden");
+        }
+      }
+      function qrMarkup(seed) {
+        const size = 21;
+        const finder = (x, y, fx, fy) => {
+          const dx = x - fx,
+            dy = y - fy;
+          if (dx < 0 || dx > 6 || dy < 0 || dy > 6) return false;
+          return (
+            dx === 0 ||
+            dx === 6 ||
+            dy === 0 ||
+            dy === 6 ||
+            (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4)
+          );
+        };
+        const hash = [...seed].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+        let html = "";
+        for (let y = 0; y < size; y++)
+          for (let x = 0; x < size; x++) {
+            const on =
+              finder(x, y, 0, 0) ||
+              finder(x, y, 14, 0) ||
+              finder(x, y, 0, 14) ||
+              ((x * 17 + y * 11 + hash + x * y) % 5 < 2 && x > 7 && y > 7);
+            html += `<i class="${on ? "on" : ""}"></i>`;
+          }
+        return html;
+      }
+      function openReservation() {
+        const s = currentShop();
+        $("#reservationPhone").value = "";
+        $("#qrResult").classList.add("hidden");
+        $("#qrPlaceholder").classList.remove("hidden");
+        $("#completeReservation").classList.add("hidden");
+        $("#qrSub").textContent = `商户：${s.name}｜近 ${s.gates}`;
+        $("#reservationModal").classList.remove("hidden");
+      }
+      function showFlightIntegration() {
+        const time = $("#boarding").value || "待录入";
+        const gate = $("#gate").value || "待录入";
+        $("#connectionResult").textContent =
+          `航班信息协同示意：将由航旅纵横核验登机时间 ${time}、登机口 ${gate} 与航班状态；正式结果以授权接口和现场广播为准。`;
+      }
+      function openPhoto(token) {
+        const [kind, id] = token.split(":");
+        const point =
+          kind === "public"
+            ? publicPoints.find((x) => x.id === id)
+            : shops.find((x) => x.id === id);
+        if (!point) return;
+        $("#photoModalImage").src = img(point.photos[0]);
+        $("#photoModalImage").alt = point.name + "现场照片";
+        $("#photoModalTitle").textContent = point.name;
+        $("#photoModalCaption").textContent =
+          `${zoneName(point.zone)}｜临近 ${point.gates}｜${point.desc}`;
+        $("#photoModal").classList.remove("hidden");
+      }
+      function bindDynamic() {
+        $$("[data-photo]").forEach(
+          (b) => (b.onclick = () => openPhoto(b.dataset.photo)),
+        );
+        $$("[data-plan]").forEach(
+          (b) => (b.onclick = () => openAvailability(b.dataset.plan)),
+        );
+        $$("[data-map]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              let id = b.dataset.map,
+                found = shops.find((x) => x.id === id);
+              if (found) {
+                state.selected = id;
+                renderMap();
+                renderJourney();
+                $("#map").scrollIntoView({ behavior: "smooth" });
+              }
+            }),
+        );
+        $$("[data-corridor]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              let z = b.dataset.corridor;
+              renderCorridor(z);
+              $("#corridors").scrollIntoView({ behavior: "smooth" });
+            }),
+        );
+        $$("[data-mapfilter]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              state.mapFilter = b.dataset.mapfilter;
+              renderMap();
+            }),
+        );
+        $$("[data-publiczone]").forEach(
+          (b) => (b.onclick = () => renderPublic(b.dataset.publiczone)),
+        );
+        $$("[data-publicmap]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              let p = publicPoints.find((x) => x.id === b.dataset.publicmap);
+              if (p) {
+                state.zone = p.zone;
+                state.mapFilter = "public";
+                renderMap();
+                $("#map").scrollIntoView({ behavior: "smooth" });
+              }
+            }),
+        );
+      }
+      function renderAll() {
+        renderReco();
+        renderMap();
+        renderCorridor(state.corridor || state.zone);
+        renderPublic(state.publicZone || state.zone);
+        renderJourney();
+      }
+      function init() {
+        setOptions();
+        let n = new Date(Date.now() + 90 * 60000);
+        $("#boarding").value =
+          String(n.getHours()).padStart(2, "0") +
+          ":" +
+          String(n.getMinutes()).padStart(2, "0");
+        $$("[data-traveller]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              state.traveller = b.dataset.traveller;
+              $$("[data-traveller]").forEach((x) =>
+                x.classList.toggle("active", x === b),
+              );
+              updateHome();
+            }),
+        );
+        $$("[data-entry]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              $$("[data-entry]").forEach((x) =>
+                x.classList.toggle("active", x === b),
+              );
+              $("#scanPane").classList.toggle(
+                "hidden",
+                b.dataset.entry !== "scan",
+              );
+            }),
+        );
+        $$("[data-need]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              state.need = b.dataset.need;
+              $$("[data-need]").forEach((x) =>
+                x.classList.toggle("active", x === b),
+              );
+              renderAll();
+            }),
+        );
+        [
+          "zone",
+          "arrivalZone",
+          "arrivalStay",
+          "boarding",
+          "gate",
+          "buffer",
+        ].forEach((id) =>
+          $("#" + id).addEventListener("input", () => {
+            if (id === "arrivalZone" && state.traveller === "arrival")
+              state.zone = $("#arrivalZone").value;
+            else if (id === "zone") state.zone = $("#zone").value;
+            renderAll();
+          }),
+        );
+        $("#showMap").onclick = () =>
+          $("#map").scrollIntoView({ behavior: "smooth" });
+        $("#adjust").onclick = () =>
+          $(".control-panel").scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        $("#corridorMap").onclick = () =>
+          $("#map").scrollIntoView({ behavior: "smooth" });
+        $("#journeyMap").onclick = () =>
+          $("#map").scrollIntoView({ behavior: "smooth" });
+        $$("[data-plan-action]").forEach(
+          (button) =>
+            (button.onclick = () => {
+              if (button.dataset.planAction === "buffer") {
+                $("#recommend").scrollIntoView({ behavior: "smooth" });
+                toast("可在行程匹配页调整安全缓冲时间。");
+              } else {
+                toast(
+                  "收尾提示：保存文件，收妥电脑、证件与充电设备，并按现场导向返回登机口。",
+                );
+              }
+            }),
+        );
+        $("#publicMap").onclick = () => {
+          state.mapFilter = "public";
+          renderMap();
+          $("#map").scrollIntoView({ behavior: "smooth" });
+        };
+        $("#startTimer").onclick = () => {
+          if (state.timer) return;
+          state.timer = setInterval(() => {
+            state.left = Math.max(0, state.left - 1);
+            refreshTimer();
+            if (!state.left) {
+              clearInterval(state.timer);
+              state.timer = null;
+              $("#timerHint").textContent =
+                "安全办公窗口已结束，请立即根据现场导向前往登机口。";
+              toast("安全办公窗口已结束。");
+            }
+          }, 1000);
+          $("#timerHint").textContent =
+            "计时进行中，请同时关注航班显示、机场广播与现场通行情况。";
+        };
+        $("#resetTimer").onclick = () => {
+          clearInterval(state.timer);
+          state.timer = null;
+          state.left = Math.max(
+            0,
+            (typeof minutes(currentShop()) === "number"
+              ? minutes(currentShop())
+              : 0) * 60,
+          );
+          refreshTimer();
+          $("#timerHint").textContent = "已按当前安全办公窗口重置计时。";
+        };
+        $("#copyPlan").onclick = async () => {
+          let t = $("#journeyCopy").textContent;
+          try {
+            await navigator.clipboard.writeText(t);
+            toast("安全办公计划已复制。");
+          } catch (e) {
+            toast(t);
+          }
+        };
+        $("#camera").onclick = () => $("#boardingFile").click();
+        $("#upload").onclick = () => $("#boardingFile").click();
+        $("#flightConnect").onclick = showFlightIntegration;
+        $("#merchantConnect").onclick = () =>
+          openAvailability(currentShop().id);
+        $("#homeCapacity").onclick = () => openAvailability(currentShop().id);
+        $("#boardingFile").onchange = (e) => {
+          if (e.target.files[0]) {
+            $("#scanStatus").textContent =
+              "登机牌已载入。请人工核对登机时间与登机口后继续；航班状态将在授权后由航旅纵横校验。";
+            toast("已载入登机牌，请完成信息核对。");
+          }
+        };
+        $("#closeAvailability").onclick = () =>
+          $("#availabilityModal").classList.add("hidden");
+        $("#closeReservation").onclick = () =>
+          $("#reservationModal").classList.add("hidden");
+        $("#backToAvailability").onclick = () => {
+          $("#reservationModal").classList.add("hidden");
+          $("#availabilityModal").classList.remove("hidden");
+        };
+        $("#getReservationQr").onclick = () => {
+          const phone = $("#reservationPhone").value.trim();
+          if (!/^1\d{10}$/.test(phone)) {
+            toast("请输入有效的11位手机号码。");
+            return;
+          }
+          $("#qrGrid").innerHTML = qrMarkup(phone + currentShop().id);
+          $("#qrTitle").textContent = `${currentShop().name}｜预约凭证`;
+          $("#qrPlaceholder").classList.add("hidden");
+          $("#qrResult").classList.remove("hidden");
+          $("#completeReservation").classList.remove("hidden");
+        };
+        $("#completeReservation").onclick = () => {
+          $("#reservationModal").classList.add("hidden");
+          toast("预约凭证已生成，请向门店服务人员出示。");
+        };
+        $("#closePhoto").onclick = () =>
+          $("#photoModal").classList.add("hidden");
+        $("#returnSelect").onclick = () => {
+          $("#availabilityModal").classList.add("hidden");
+          $("#recommend").scrollIntoView({ behavior: "smooth" });
+        };
+        $("#checkCapacity").onclick = () =>
+          setCapacity(currentShop().capacity === "full" ? "full" : "ok");
+        $("#simulateFull").onclick = () => setCapacity("full");
+        $("#reserve").onclick = () => {
+          $("#availabilityModal").classList.add("hidden");
+          openReservation();
+        };
+        $("#print").onclick = () => window.print();
+        $("#reset").onclick = () => location.reload();
+        const obs = new IntersectionObserver(
+          (es) =>
+            es.forEach((e) => {
+              if (e.isIntersecting)
+                $$(".bottom a").forEach((a) =>
+                  a.classList.toggle(
+                    "active",
+                    a.getAttribute("href") === "#" + e.target.id,
+                  ),
+                );
+            }),
+          { threshold: 0.45 },
+        );
+        $$(".page").forEach((p) => obs.observe(p));
+        renderAll();
+      }
+      init();
+    </script>
+  
+
+</body></html>
