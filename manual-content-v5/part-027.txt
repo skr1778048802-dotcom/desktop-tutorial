@@ -1,0 +1,115 @@
+办公窗口已结束，请立即根据现场导向前往登机口。";
+              toast("安全办公窗口已结束。");
+            }
+          }, 1000);
+          $("#timerHint").textContent =
+            "计时进行中，请同时关注航班显示、机场广播与现场通行情况。";
+        };
+        $("#resetTimer").onclick = () => {
+          clearInterval(state.timer);
+          state.timer = null;
+          state.left = Math.max(
+            0,
+            (typeof minutes(currentShop()) === "number"
+              ? minutes(currentShop())
+              : 0) * 60,
+          );
+          refreshTimer();
+          $("#timerHint").textContent = "已按当前安全办公窗口重置计时。";
+        };
+        $("#copyPlan").onclick = async () => {
+          let t = $("#journeyCopy").textContent;
+          try {
+            await navigator.clipboard.writeText(t);
+            toast("安全办公计划已复制。");
+          } catch (e) {
+            toast(t);
+          }
+        };
+        $("#camera").onclick = () => $("#boardingFile").click();
+        $("#upload").onclick = () => $("#boardingFile").click();
+        $("#flightConnect").onclick = showFlightIntegration;
+        $("#merchantConnect").onclick = () =>
+          openAvailability(currentShop().id);
+        $("#homeCapacity").onclick = () => openAvailability(currentShop().id);
+        $("#boardingFile").onchange = (e) => {
+          if (e.target.files[0]) {
+            $("#scanStatus").textContent =
+              "登机牌已载入。请人工核对登机时间与登机口后继续；航班状态将在授权后由航旅纵横校验。";
+            toast("已载入登机牌，请完成信息核对。");
+          }
+        };
+        $("#closeAvailability").onclick = () =>
+          $("#availabilityModal").classList.add("hidden");
+        $("#closeFlight").onclick = () =>
+          $("#flightModal").classList.add("hidden");
+        $("#refreshFlight").onclick = () => {
+          const states = ["计划登机", "正在值机", "登机口已确认"];
+          $("#flightStatus").textContent = states[Math.floor(Math.random() * states.length)];
+          $("#flightSyncState").textContent = "航班示意信息已刷新；正式接入后将显示实时航班动态。";
+          toast("航班示意信息已刷新。")
+        };
+        $("#useFlightInfo").onclick = () => {
+          $("#flightModal").classList.add("hidden");
+          renderAll();
+          $("#recommend").scrollIntoView({ behavior: "smooth" });
+          toast("航班信息已用于匹配商务停留点。")
+        };
+        $("#closeReservation").onclick = () =>
+          $("#reservationModal").classList.add("hidden");
+        $("#backToAvailability").onclick = () => {
+          $("#reservationModal").classList.add("hidden");
+          $("#availabilityModal").classList.remove("hidden");
+        };
+        $("#getReservationQr").onclick = () => {
+          const phone = $("#reservationPhone").value.trim();
+          if (!/^1\d{10}$/.test(phone)) {
+            toast("请输入有效的11位手机号码。");
+            return;
+          }
+          $("#qrGrid").innerHTML = qrMarkup(phone + currentShop().id);
+          $("#qrTitle").textContent = `${currentShop().name}｜预约凭证`;
+          $("#qrPlaceholder").classList.add("hidden");
+          $("#qrResult").classList.remove("hidden");
+          $("#completeReservation").classList.remove("hidden");
+        };
+        $("#completeReservation").onclick = () => {
+          $("#reservationModal").classList.add("hidden");
+          toast("预约凭证已生成，请向门店服务人员出示。");
+        };
+        $("#closePhoto").onclick = () =>
+          $("#photoModal").classList.add("hidden");
+        $("#returnSelect").onclick = () => {
+          $("#availabilityModal").classList.add("hidden");
+          $("#recommend").scrollIntoView({ behavior: "smooth" });
+        };
+        $("#checkCapacity").onclick = () =>
+          setCapacity(currentShop().capacity === "full" ? "full" : "ok");
+        $("#simulateFull").onclick = () => setCapacity("full");
+        $("#reserve").onclick = () => {
+          $("#availabilityModal").classList.add("hidden");
+          openReservation();
+        };
+        $("#print").onclick = () => window.print();
+        $("#reset").onclick = () => location.reload();
+        const obs = new IntersectionObserver(
+          (es) =>
+            es.forEach((e) => {
+              if (e.isIntersecting)
+                $$(".bottom a").forEach((a) =>
+                  a.classList.toggle(
+                    "active",
+                    a.getAttribute("href") === "#" + e.target.id,
+                  ),
+                );
+            }),
+          { threshold: 0.45 },
+        );
+        $$(".page").forEach((p) => obs.observe(p));
+        renderAll();
+      }
+      init();
+    </script>
+  
+
+</body></html>
