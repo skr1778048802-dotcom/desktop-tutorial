@@ -467,6 +467,11 @@ m82xAf5f/m1X1oLQL4gk+ly9wXHzl9yyQR/NMDs3rN1TPcczXNOt3i/BuZYdOZadatIJfo8PdwYYbYlR
         if (gate >= 188 && gate <= 197) return "s1";
         return null;
       }
+      function gateLabel(value, fallback = "待录入登机口") {
+        const raw = String(value || "").trim();
+        if (!raw) return fallback;
+        return raw.endsWith("登机口") ? raw : raw + "登机口";
+      }
       function currentShop() {
         return shops.find((x) => x.id === state.selected) || shops[0];
       }
@@ -799,7 +804,7 @@ m82xAf5f/m1X1oLQL4gk+ly9wXHzl9yyQR/NMDs3rN1TPcczXNOt3i/BuZYdOZadatIJfo8PdwYYbYlR
                   "03",
                   "收尾返回",
                   "保存文件并按现场导向返回" +
-                    ($("#gate").value || "登机口方向"),
+                    gateLabel($("#gate").value, "登机口方向"),
                 ],
               ];
         $("#timeline").innerHTML = rows
@@ -833,7 +838,7 @@ m82xAf5f/m1X1oLQL4gk+ly9wXHzl9yyQR/NMDs3rN1TPcczXNOt3i/BuZYdOZadatIJfo8PdwYYbYlR
           f =
             state.traveller === "arrival"
               ? "到达旅客｜当前区域 " + zoneName(state.zone)
-              : `出发旅客｜${$("#boarding").value || "待录入登机时间"}｜${$("#gate").value || "待录入登机口"}`;
+              : `出发旅客｜${$("#boarding").value || "待录入登机时间"}｜${gateLabel($("#gate").value)}`;
         return [
           ["行程状态", f],
           ["航旅纵横", "待接入：航班、登机口与登机状态"],
@@ -918,7 +923,7 @@ m82xAf5f/m1X1oLQL4gk+ly9wXHzl9yyQR/NMDs3rN1TPcczXNOt3i/BuZYdOZadatIJfo8PdwYYbYlR
       function showFlightIntegration() {
         const time = $("#boarding").value || "待录入";
         const gate = $("#gate").value || "待录入";
-        const gateText = gate === "待录入" ? gate : `${gate.replace(/登机口$/, "")}登机口`;
+        const gateText = gate === "待录入" ? gate : gateLabel(gate);
         const suggested = recommendations()[0] || currentShop();
         const safeMinutes = minutes(suggested);
         $("#flightBoarding").textContent = time;
