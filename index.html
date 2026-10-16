@@ -1545,10 +1545,6 @@
         color: #147661;
         font-weight: 900;
       }
-      .page:not(#home) {
-        content-visibility: auto;
-        contain-intrinsic-size: 100vh;
-      }
       @media print {
         body {
           background: #fff;
@@ -1604,13 +1600,168 @@
           height: 120px;
         }
       }
+
+      /* 商务消费导航增强页 */
+      .solution-leadline {
+        display: flex; align-items: center; justify-content: space-between; gap: 18px;
+        margin: 18px 0 20px; padding: 15px 18px; border: 1px solid #d9e5ea;
+        border-radius: 16px; background: rgba(255,255,255,.82);
+      }
+      #solutions { background: linear-gradient(135deg,#eef5f7 0%,#f8f6f0 100%); }
+      #journey { background: #fff; }
+      .solution-leadline b { color: var(--navy); font-size: 17px; }
+      .solution-leadline span { color: #55717e; font-size: 13px; }
+      .solution-choice-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 17px; }
+      .solution-choice {
+        position: relative; min-height: 430px; overflow: hidden; padding: 0; border: 1px solid #d4e1e7;
+        border-radius: 22px; background: #fff; color: var(--navy); text-align: left;
+        box-shadow: 0 18px 38px rgba(8,47,84,.11); cursor: pointer;
+        transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      }
+      .solution-choice:hover { transform: translateY(-4px); border-color: #b58a27; box-shadow: 0 24px 48px rgba(8,47,84,.17); }
+      .solution-choice img { width: 100%; height: 230px; object-fit: cover; display: block; }
+      .solution-choice-copy { padding: 20px 21px 22px; }
+      .solution-choice .solution-no {
+        display: inline-grid; place-items: center; width: 36px; height: 28px; margin-bottom: 11px;
+        border-radius: 9px; background: #e2ad2d; color: #082f54; font-weight: 950; font-size: 12px;
+      }
+      .solution-choice h3 { margin: 0 0 8px; font-size: 24px; color: var(--navy); }
+      .solution-choice p { min-height: 48px; margin: 0 0 15px; color: #5a707c; line-height: 1.65; }
+      .solution-open { display: flex; justify-content: space-between; align-items: center; color: #147661; font-size: 13px; font-weight: 900; }
+      .solution-open i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--navy); color: #fff; font-style: normal; }
+      .solution-bottom { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 18px; }
+      .solution-bottom > div { padding: 14px 16px; border-radius: 14px; background: #eaf3f5; color: #46636f; font-size: 13px; }
+      .solution-bottom b { display: block; margin-bottom: 3px; color: var(--navy); }
+
+      .commerce-panel { width: min(1180px,100%); min-height: 690px; margin: 10px auto 40px; overflow: hidden; border-radius: 24px; background: #f4f8f9; box-shadow: 0 30px 80px rgba(0,0,0,.38); }
+      .commerce-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 22px 25px; background: linear-gradient(135deg,#082f54,#0d4a70); color: #fff; }
+      .commerce-head p { margin: 0 0 4px; color: #bcd5df; font-size: 12px; font-weight: 900; letter-spacing: .1em; }
+      .commerce-head h2 { margin: 0; color: #fff; font-size: 32px; }
+      .commerce-head span { display: block; margin-top: 6px; color: #dce9ee; }
+      .commerce-body { display: grid; grid-template-columns: 270px 1fr; min-height: 520px; }
+      .commerce-side { padding: 20px; border-right: 1px solid #d7e3e8; background: #fff; }
+      .commerce-categories { display: grid; gap: 8px; }
+      .commerce-category { padding: 13px 14px; border: 1px solid #d6e2e7; border-radius: 13px; background: #fff; color: var(--navy); text-align: left; font-weight: 900; cursor: pointer; }
+      .commerce-category.active { border-color: var(--navy); background: var(--navy); color: #fff; }
+      .commerce-summary { margin: 17px 0; padding: 15px; border-radius: 14px; background: #eef5f6; color: #58727d; font-size: 13px; line-height: 1.65; }
+      .commerce-summary b { display: block; color: var(--navy); font-size: 16px; }
+      .preset-list { display: grid; gap: 8px; margin-top: 10px; }
+      .preset-list button { padding: 10px 12px; border: 1px solid #d4e0e5; border-radius: 11px; background: #fff; color: #204866; text-align: left; font-weight: 800; cursor: pointer; }
+      .preset-list button:hover { border-color: #b58a27; background: #fffaf0; }
+      .commerce-main { padding: 20px; min-width: 0; }
+      .brand-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+      .brand-chip { padding: 9px 13px; border: 1px solid #cbdce3; border-radius: 999px; background: #fff; color: #28536b; font-size: 12px; font-weight: 900; cursor: pointer; }
+      .brand-chip.active { border-color: #147661; background: #147661; color: #fff; }
+      .brand-intro { min-height: 42px; margin: 0 0 13px; color: #5a747f; font-size: 13px; }
+      .product-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 13px; }
+      .product-card { overflow: hidden; border: 1px solid #d5e2e7; border-radius: 16px; background: #fff; box-shadow: 0 10px 24px rgba(8,47,84,.07); }
+      .product-card img { width: 100%; height: 150px; display: block; object-fit: cover; }
+      .product-copy { padding: 13px; }
+      .product-brand { display: block; margin-bottom: 4px; color: #147661; font-size: 11px; font-weight: 950; }
+      .product-card h3 { min-height: 44px; margin: 0 0 6px; color: var(--navy); font-size: 17px; }
+      .product-card p { min-height: 58px; margin: 0 0 10px; color: #647a84; font-size: 12px; line-height: 1.55; }
+      .product-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+      .product-price { color: #a56b00; font-size: 18px; font-weight: 950; }
+      .price-kind { padding: 4px 7px; border-radius: 999px; background: #edf4f5; color: #54707c; font-size: 10px; font-weight: 900; }
+      .add-product { width: 100%; padding: 9px; border: 1px solid var(--navy); border-radius: 10px; background: #fff; color: var(--navy); font-weight: 900; cursor: pointer; }
+      .add-product.selected { background: var(--navy); color: #fff; }
+      .combo-dock { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 15px 20px; border-top: 1px solid #d7e3e8; background: #fff; }
+      .combo-dock b { color: var(--navy); }
+      .combo-dock span { color: #667e87; font-size: 12px; }
+      .combo-total { color: #a56b00 !important; font-size: 20px !important; font-weight: 950; }
+      .commerce-disclaimer { margin-top: 14px; color: #71858d; font-size: 11px; line-height: 1.55; }
+
+      .charge-panel { width: min(760px,100%); margin: 8vh auto; overflow: hidden; border-radius: 23px; background: #f5f9fa; box-shadow: 0 30px 70px rgba(0,0,0,.35); }
+      .charge-body { padding: 22px; }
+      .charge-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 16px 0; }
+      .charge-item { padding: 17px; border: 1px solid #d5e2e7; border-radius: 15px; background: #fff; }
+      .charge-item i { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: 10px; border-radius: 10px; background: #e5f1f2; color: #147661; font-style: normal; font-weight: 950; }
+      .charge-item b { display: block; margin-bottom: 5px; color: var(--navy); }
+      .charge-item span { color: #607782; font-size: 12px; line-height: 1.55; }
+      .charge-pending { padding: 13px 15px; border-left: 4px solid #e2ad2d; border-radius: 10px; background: #fff8e7; color: #70571d; font-size: 13px; }
+
+      @media (max-width: 900px) {
+        .solution-choice-grid, .solution-bottom { grid-template-columns: 1fr; }
+        .solution-choice { min-height: 0; }
+        .solution-choice img { height: 210px; }
+        .commerce-body { grid-template-columns: 1fr; }
+        .commerce-side { border-right: 0; border-bottom: 1px solid #d7e3e8; }
+        .commerce-categories { grid-template-columns: repeat(3,1fr); }
+        .product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      }
+      @media (max-width: 600px) {
+        .solution-leadline { align-items: flex-start; flex-direction: column; }
+        .commerce-panel { margin: 0; border-radius: 0; }
+        .commerce-head { padding: 18px; }
+        .commerce-head h2 { font-size: 25px; }
+        .commerce-categories { grid-template-columns: 1fr; }
+        .product-grid, .charge-grid { grid-template-columns: 1fr; }
+        .product-card { display: grid; grid-template-columns: 108px 1fr; }
+        .product-card img { width: 108px; height: 100%; min-height: 180px; }
+        .product-card h3, .product-card p { min-height: 0; }
+        .combo-dock { grid-template-columns: 1fr 1fr; }
+        .combo-dock > div { grid-column: 1/3; }
+      }
+      @media print {
+        #solutions .solution-choice-grid { grid-template-columns: repeat(3,1fr); }
+        #solutions button.solution-choice { display: block !important; min-height: 360px; }
+        #solutions .solution-choice img { height: 185px; }
+      }
+
+      /* 商务场景页视觉区分：冷蓝科技 / 暖橙恢复 / 朱红青绿礼赠 */
+      #solutions { background: linear-gradient(135deg,#edf5f8 0%,#fffaf3 52%,#f4f0eb 100%); }
+      #solutions .wrap { max-width: 1360px; }
+      #solutions .lead { max-width: 880px; }
+      .solution-leadline { margin: 14px 0 16px; padding: 13px 17px; }
+      .solution-leadline b { font-size: 16px; }
+      .solution-choice-grid { gap: 18px; }
+      .solution-choice { min-height: 400px; border: 0; box-shadow: 0 18px 38px rgba(8,47,84,.13); }
+      .solution-visual { position: relative; display: block; overflow: hidden; }
+      .solution-visual::after { content:""; position:absolute; inset:auto 0 0; height:38%; background:linear-gradient(transparent,rgba(4,21,37,.34)); pointer-events:none; }
+      .solution-choice img { height: 220px; transition: transform .35s ease; }
+      .solution-choice:hover img { transform: scale(1.025); }
+      .solution-scene { position:absolute; left:16px; bottom:14px; z-index:1; padding:6px 10px; border-radius:999px; color:#fff; font-size:11px; font-weight:900; letter-spacing:.06em; backdrop-filter:blur(5px); }
+      .solution-choice.emergency { border-top: 5px solid #1677c8; }
+      .solution-choice.emergency .solution-scene, .solution-choice.emergency .solution-no { background:#1677c8; color:#fff; }
+      .solution-choice.emergency .solution-open { color:#0a6aa8; }
+      .solution-choice.recovery { border-top: 5px solid #d96b48; }
+      .solution-choice.recovery .solution-scene, .solution-choice.recovery .solution-no { background:#d96b48; color:#fff; }
+      .solution-choice.recovery .solution-open { color:#a94b35; }
+      .solution-choice.gift { border-top: 5px solid #a12f30; }
+      .solution-choice.gift .solution-scene, .solution-choice.gift .solution-no { background:#a12f30; color:#fff; }
+      .solution-choice.gift .solution-open { color:#7f292b; }
+      .solution-choice-copy { padding: 17px 19px 19px; }
+      .solution-choice h3 { font-size: 22px; }
+      .solution-choice p { min-height: 58px; font-size: 13px; line-height:1.58; }
+      .solution-bottom { margin-top: 14px; }
+      .solution-bottom > div { min-height: 68px; background:rgba(255,255,255,.72); border:1px solid rgba(185,205,214,.7); }
+
+      .commerce-panel { --scene:#1677c8; --scene-soft:#e9f5ff; --scene-deep:#084f88; }
+      .commerce-panel[data-theme="recovery"] { --scene:#d96b48; --scene-soft:#fff0e8; --scene-deep:#873d2c; }
+      .commerce-panel[data-theme="gift"] { --scene:#a12f30; --scene-soft:#f9ece8; --scene-deep:#642326; }
+      .commerce-head { position:relative; align-items:center; min-height:110px; padding:18px 24px; overflow:hidden; background:linear-gradient(135deg,var(--scene-deep),var(--scene)); }
+      .commerce-head-copy { position:relative; z-index:2; max-width:650px; }
+      .commerce-head-visual { position:absolute; right:70px; top:0; width:330px; height:100%; opacity:.34; object-fit:cover; filter:saturate(1.15) contrast(1.06); mask-image:linear-gradient(90deg,transparent,#000 40%); }
+      .commerce-head .close { position:relative; z-index:3; }
+      .commerce-category.active, .brand-chip.active { border-color:var(--scene); background:var(--scene); }
+      .commerce-summary { background:var(--scene-soft); }
+      .commerce-summary b, .product-brand { color:var(--scene-deep); }
+      .preset-list button:hover { border-color:var(--scene); background:var(--scene-soft); }
+      .product-card { border-top:3px solid color-mix(in srgb,var(--scene) 70%,white); }
+      .add-product { border-color:var(--scene-deep); color:var(--scene-deep); }
+      .add-product.selected { background:var(--scene-deep); color:#fff; }
+      @media (max-width:600px) {
+        .commerce-head-visual { right:0; width:55%; opacity:.18; }
+        .solution-choice p { min-height:0; }
+      }
+
     </style>
-    <link rel="preload" as="image" href="fast-assets-v1/logo.jpg?v=20260930-1" fetchpriority="high">
-  </head>
+  <link rel="preconnect" href="https://skr1778048802-dotcom.github.io" crossorigin>
+</head>
   <body>
     <header class="top">
       <div class="brand"><b>T5</b><span>西安机场T5商务出行手册</span></div>
-      <img loading="eager" fetchpriority="high" decoding="async" class="top-logo" src="fast-assets-v1/logo.jpg?v=20260930-1" alt="MIXC AIR">
+      <img class="top-logo" src="fast-assets-v1/logo.jpg?v=20261016-1" alt="MIXC AIR">
       <div class="top-actions">
         <button class="btn sm" id="print">打印宣发版</button><button class="btn primary sm" id="reset">重新开始</button>
       </div>
@@ -1618,7 +1769,7 @@
     <main>
       <section class="page" id="home">
         <div class="page-logo">
-          <img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/logo.jpg?v=20260930-1" alt="MIXC AIR">
+          <img src="fast-assets-v1/logo.jpg?v=20261016-1" alt="MIXC AIR">
         </div>
         <div class="wrap">
           <p class="eyebrow">MIXC AIR × 西安机场T5</p>
@@ -1638,7 +1789,7 @@
                   <span class="n">02</span>
                   <h3>到达旅客</h3>
                   <p>
-                    选择到达出口或当前区域，匹配短停、会面和办公资源。
+                    填写到达登机口，匹配附近的短停、会面和办公资源。
                   </p>
                 </button>
               </div>
@@ -1669,13 +1820,13 @@
                 </div>
               </div>
               <div class="entry-form hidden" id="arrivalForm">
-                <h3>到达区域选择</h3>
+                <h3>到达登机口</h3>
                 <p>
-                  选择到达出口或当前区域，并填写预计停留时长。
+                  填写航班到达登机口，自动匹配所在指廊附近资源。
                 </p>
                 <div class="fields">
                   <div class="field">
-                    <label>到达出口 / 当前区域</label><select id="arrivalZone"><option value="central">中央集中区</option><option value="n1">北一指廊</option><option value="n2">北二指廊</option><option value="n3">北三指廊</option><option value="s1">南一指廊</option><option value="s2">南二指廊</option><option value="s3">南三指廊</option><option value="south">南集中区</option><option value="north">北集中区</option><option value="outside">安检外</option></select>
+                    <label>到达登机口</label><input id="arrivalGate" inputmode="numeric" placeholder="如：127">
                   </div>
                   <div class="field">
                     <label>预计停留时长</label><select id="arrivalStay">
@@ -1726,7 +1877,7 @@
       </section>
       <section class="page" id="recommend">
         <div class="page-logo">
-          <img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/logo.jpg?v=20260930-1" alt="MIXC AIR">
+          <img src="fast-assets-v1/logo.jpg?v=20261016-1" alt="MIXC AIR">
         </div>
         <div class="wrap">
           <p class="eyebrow">行程匹配</p>
@@ -1767,7 +1918,7 @@
                 </div>
                 <button class="btn sm" id="adjust">调整条件</button>
               </div>
-              <div class="reco-list" id="recoList"><article class="reco"><span class="rank">01</span><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p22.jpg?v=20260930-1" alt="树夏现场照片"><div><b>树夏｜近 中央集中区</b><span>中央集中区｜登机口导向 中央集中区</span><span>位于各指廊之间，适合中途衔接与短时沟通。</span><span class="tag green">可安排约 322 分钟</span></div><button class="btn primary sm" data-plan="shuxia-c">纳入行程</button></article><article class="reco"><span class="rank">02</span><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p24.jpg?v=20260930-1" alt="星巴克（南）现场照片"><div><b>星巴克（南）｜近 中央商业区南侧</b><span>中央集中区｜登机口导向 中央商业区南侧</span><span>适合电脑办公、短谈及行程确认。</span><span class="tag green">可安排约 322 分钟</span></div><button class="btn primary sm" data-plan="star-s">纳入行程</button></article><article class="reco"><span class="rank">03</span><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p25.jpg?v=20260930-1" alt="星巴克（北）现场照片"><div><b>星巴克（北）｜近 临近到达出口</b><span>中央集中区｜登机口导向 临近到达出口</span><span>靠近出口，优先服务到达旅客的短停与会面。</span><span class="tag green">可安排约 322 分钟</span></div><button class="btn primary sm" data-plan="star-n">纳入行程</button></article></div>
+              <div class="reco-list" id="recoList"><article class="reco"><span class="rank">01</span><img src="fast-assets-v1/p22.jpg?v=20261016-1" alt="树夏现场照片"><div><b>树夏｜近 中央集中区</b><span>中央集中区｜登机口导向 中央集中区</span><span>位于各指廊之间，适合中途衔接与短时沟通。</span><span class="tag green">可安排约 322 分钟</span></div><button class="btn primary sm" data-plan="shuxia-c">纳入行程</button></article><article class="reco"><span class="rank">02</span><img src="fast-assets-v1/p24.jpg?v=20261016-1" alt="星巴克（南）现场照片"><div><b>星巴克（南）｜近 中央商业区南侧</b><span>中央集中区｜登机口导向 中央商业区南侧</span><span>适合电脑办公、短谈及行程确认。</span><span class="tag green">可安排约 322 分钟</span></div><button class="btn primary sm" data-plan="star-s">纳入行程</button></article><article class="reco"><span class="rank">03</span><img src="fast-assets-v1/p25.jpg?v=20261016-1" alt="星巴克（北）现场照片"><div><b>星巴克（北）｜近 临近到达出口</b><span>中央集中区｜登机口导向 临近到达出口</span><span>靠近出口，优先服务到达旅客的短停与会面。</span><span class="tag green">可安排约 322 分钟</span></div><button class="btn primary sm" data-plan="star-n">纳入行程</button></article></div>
               <p class="print-note">
                 点击“纳入行程”查询接待能力；满位可返回重选，可接待可一键预定。
               </p>
@@ -1777,7 +1928,7 @@
       </section>
       <section class="page" id="map">
         <div class="page-logo">
-          <img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/logo.jpg?v=20260930-1" alt="MIXC AIR">
+          <img src="fast-assets-v1/logo.jpg?v=20261016-1" alt="MIXC AIR">
         </div>
         <div class="wrap">
           <p class="eyebrow">室内导向</p>
@@ -1796,7 +1947,7 @@
           <div class="map-layout">
             <div>
               <div class="map-shell">
-                <img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/map.webp?v=20260930-1" alt="西安机场T5简化平面图"><svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <img src="fast-assets-v1/legacy-01.png?v=20261016-1" alt="西安机场T5简化平面图"><svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
                   <path class="route-glow" id="routeGlow" d="M50 51 L50 62 L50 72 L48.5 70.5"></path>
                   <path class="route-base" id="routePath" d="M50 51 L50 62 L50 72 L48.5 70.5"></path>
                   <path class="route-flow" id="routeFlow" d="M50 51 L50 62 L50 72 L48.5 70.5"></path>
@@ -1811,13 +1962,13 @@
                 <span><i></i>商户</span><span><i class="pub"></i>公共办公区</span><span><i class="you-key"></i>当前位置</span><span><i class="route"></i>实时路线</span>
               </div>
             </div>
-            <aside class="card map-detail" id="mapDetail"><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p35.jpg?v=20260930-1" alt="MOLLYTEA / 瑞幸咖啡现场照片"><span class="tag">安检外</span><h3>MOLLYTEA / 瑞幸咖啡｜近 安检外</h3><p>适合接送机、等待、会面与入场前短停。</p><p class="micro">登机口导向：安检外<br>区域级路径已保持常亮，请以现场导向为准。</p><div class="actions"><button class="btn sm" data-photo="shop:molly-out">查看现场</button><button class="btn sm" data-corridor="outside">查看分区点位</button><button class="btn primary sm" data-plan="molly-out">纳入行程</button></div></aside>
+            <aside class="card map-detail" id="mapDetail"><img src="fast-assets-v1/p35.jpg?v=20261016-1" alt="MOLLYTEA / 瑞幸咖啡现场照片"><span class="tag">安检外</span><h3>MOLLYTEA / 瑞幸咖啡｜近 安检外</h3><p>适合接送机、等待、会面与入场前短停。</p><p class="micro">登机口导向：安检外<br>区域级路径已保持常亮，请以现场导向为准。</p><div class="actions"><button class="btn sm" data-photo="shop:molly-out">查看现场</button><button class="btn sm" data-corridor="outside">查看分区点位</button><button class="btn primary sm" data-plan="molly-out">纳入行程</button></div></aside>
           </div>
         </div>
       </section>
       <section class="page" id="corridors">
         <div class="page-logo">
-          <img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/logo.jpg?v=20260930-1" alt="MIXC AIR">
+          <img src="fast-assets-v1/logo.jpg?v=20261016-1" alt="MIXC AIR">
         </div>
         <div class="wrap">
           <p class="eyebrow">点位浏览</p>
@@ -1833,7 +1984,7 @@
             </div>
             <button class="btn sm" id="corridorMap">查看地图位置</button>
           </div>
-          <div class="corridor-grid" id="corridorGrid"><article class="shop"><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p22.jpg?v=20260930-1" alt="树夏现场照片"><div class="copy"><span class="gate">登机口导向：中央集中区</span><h3>树夏｜近 中央集中区</h3><p>位于各指廊之间，适合中途衔接与短时沟通。</p><div class="actions"><button class="btn sm" data-photo="shop:shuxia-c">查看现场</button><button class="btn sm" data-map="shuxia-c">地图位置</button><button class="btn primary sm" data-plan="shuxia-c">纳入行程</button></div></div></article><article class="shop"><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p24.jpg?v=20260930-1" alt="星巴克（南）现场照片"><div class="copy"><span class="gate">登机口导向：中央商业区南侧</span><h3>星巴克（南）｜近 中央商业区南侧</h3><p>适合电脑办公、短谈及行程确认。</p><div class="actions"><button class="btn sm" data-photo="shop:star-s">查看现场</button><button class="btn sm" data-map="star-s">地图位置</button><button class="btn primary sm" data-plan="star-s">纳入行程</button></div></div></article><article class="shop"><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p25.jpg?v=20260930-1" alt="星巴克（北）现场照片"><div class="copy"><span class="gate">登机口导向：临近到达出口</span><h3>星巴克（北）｜近 临近到达出口</h3><p>靠近出口，优先服务到达旅客的短停与会面。</p><div class="actions"><button class="btn sm" data-photo="shop:star-n">查看现场</button><button class="btn sm" data-map="star-n">地图位置</button><button class="btn primary sm" data-plan="star-n">纳入行程</button></div></div></article></div>
+          <div class="corridor-grid" id="corridorGrid"><article class="shop"><img src="fast-assets-v1/p22.jpg?v=20261016-1" alt="树夏现场照片"><div class="copy"><span class="gate">登机口导向：中央集中区</span><h3>树夏｜近 中央集中区</h3><p>位于各指廊之间，适合中途衔接与短时沟通。</p><div class="actions"><button class="btn sm" data-photo="shop:shuxia-c">查看现场</button><button class="btn sm" data-map="shuxia-c">地图位置</button><button class="btn primary sm" data-plan="shuxia-c">纳入行程</button></div></div></article><article class="shop"><img src="fast-assets-v1/p24.jpg?v=20261016-1" alt="星巴克（南）现场照片"><div class="copy"><span class="gate">登机口导向：中央商业区南侧</span><h3>星巴克（南）｜近 中央商业区南侧</h3><p>适合电脑办公、短谈及行程确认。</p><div class="actions"><button class="btn sm" data-photo="shop:star-s">查看现场</button><button class="btn sm" data-map="star-s">地图位置</button><button class="btn primary sm" data-plan="star-s">纳入行程</button></div></div></article><article class="shop"><img src="fast-assets-v1/p25.jpg?v=20261016-1" alt="星巴克（北）现场照片"><div class="copy"><span class="gate">登机口导向：临近到达出口</span><h3>星巴克（北）｜近 临近到达出口</h3><p>靠近出口，优先服务到达旅客的短停与会面。</p><div class="actions"><button class="btn sm" data-photo="shop:star-n">查看现场</button><button class="btn sm" data-map="star-n">地图位置</button><button class="btn primary sm" data-plan="star-n">纳入行程</button></div></div></article></div>
           <section class="card resources">
             <h3>公共服务资源</h3>
             <div class="resource-list" id="resourceList"><span class="resource">中转中心</span><span class="resource">中国南方航空木棉阁｜使用条件待核验</span><span class="resource">东航贵宾休息室｜近156—194、128—149登机口导向方向</span></div>
@@ -1842,7 +1993,7 @@
       </section>
       <section class="page" id="public">
         <div class="page-logo">
-          <img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/logo.jpg?v=20260930-1" alt="MIXC AIR">
+          <img src="fast-assets-v1/logo.jpg?v=20261016-1" alt="MIXC AIR">
         </div>
         <div class="wrap">
           <p class="eyebrow">免费公共资源</p>
@@ -1856,14 +2007,61 @@
               <h3 id="publicTitle">南三指廊公共办公区</h3>
               <p class="micro" id="publicDesc">免费使用；座位和充电位余量以现场为准。</p>
             </div>
-            <button class="btn sm" id="publicMap">在地图中查看</button>
+            <div class="actions"><button class="btn primary sm" id="chargingService">快速充电服务</button><button class="btn sm" id="publicMap">在地图中查看</button></div>
           </div>
-          <div class="corridor-grid" id="publicGrid"><article class="shop"><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p54.jpg?v=20260930-1" alt="南三公共办公区候机座席实景照片"><div class="copy"><span class="gate">候机座席｜近 189、190、193</span><h3>南三公共办公区｜近 189、190、193</h3><p>远端候机区公共座席，适合短时办公和等待。</p><div class="actions"><button class="btn sm" data-photo="public:pub-s3">查看现场</button><button class="btn sm" data-publicmap="pub-s3">地图位置</button></div></div></article><article class="shop"><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p55.jpg?v=20260930-1" alt="南三公共办公区充电与高桌实景照片"><div class="copy"><span class="gate">充电与高桌｜近 189、190、193</span><h3>南三公共办公区｜近 189、190、193</h3><p>远端候机区公共座席，适合短时办公和等待。</p><div class="actions"><button class="btn sm" data-photo="public:pub-s3">查看现场</button><button class="btn sm" data-publicmap="pub-s3">地图位置</button></div></div></article><article class="shop"><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p56.jpg?v=20260930-1" alt="南三公共办公区临窗安静座席实景照片"><div class="copy"><span class="gate">临窗安静座席｜近 189、190、193</span><h3>南三公共办公区｜近 189、190、193</h3><p>远端候机区公共座席，适合短时办公和等待。</p><div class="actions"><button class="btn sm" data-photo="public:pub-s3">查看现场</button><button class="btn sm" data-publicmap="pub-s3">地图位置</button></div></div></article></div>
+          <div class="corridor-grid" id="publicGrid"><article class="shop"><img src="fast-assets-v1/p54.jpg?v=20261016-1" alt="南三公共办公区候机座席实景照片"><div class="copy"><span class="gate">候机座席｜近 189、190、193</span><h3>南三公共办公区｜近 189、190、193</h3><p>远端候机区公共座席，适合短时办公和等待。</p><div class="actions"><button class="btn sm" data-photo="public:pub-s3">查看现场</button><button class="btn sm" data-publicmap="pub-s3">地图位置</button></div></div></article><article class="shop"><img src="fast-assets-v1/p55.jpg?v=20261016-1" alt="南三公共办公区充电与高桌实景照片"><div class="copy"><span class="gate">充电与高桌｜近 189、190、193</span><h3>南三公共办公区｜近 189、190、193</h3><p>远端候机区公共座席，适合短时办公和等待。</p><div class="actions"><button class="btn sm" data-photo="public:pub-s3">查看现场</button><button class="btn sm" data-publicmap="pub-s3">地图位置</button></div></div></article><article class="shop"><img src="fast-assets-v1/p56.jpg?v=20261016-1" alt="南三公共办公区临窗安静座席实景照片"><div class="copy"><span class="gate">临窗安静座席｜近 189、190、193</span><h3>南三公共办公区｜近 189、190、193</h3><p>远端候机区公共座席，适合短时办公和等待。</p><div class="actions"><button class="btn sm" data-photo="public:pub-s3">查看现场</button><button class="btn sm" data-publicmap="pub-s3">地图位置</button></div></div></article></div>
+        </div>
+      </section>
+
+      <section class="page" id="solutions">
+        <div class="page-logo"><img id="solutionsLogo" alt="MIXC AIR"></div>
+        <div class="wrap">
+          <p class="eyebrow">商务需求解决方案</p>
+          <h2>商务出行需求解决方案</h2>
+          <p class="lead">围绕差旅补给、候机状态管理和临时礼赠三类高频需求，提供品牌、单品与组合建议。</p>
+          <div class="solution-leadline">
+            <b>选择当前场景，查看适配品牌与预算组合</b>
+            <span>价格分为公开价与建议价，实际库存、服务时长及成交价以机场门店为准。</span>
+          </div>
+          <div class="solution-choice-grid">
+            <button class="solution-choice emergency" data-solution="emergency">
+              <span class="solution-visual"><img src="fast-assets-v2/asset-fff584617d3fbcc5.webp?v=20261016-1" alt="出差应急补给商品类型示意图"><span class="solution-scene">差旅效率</span></span>
+              <span class="solution-choice-copy">
+                <span class="solution-no">01</span>
+                <h3>出差应急补给</h3>
+                <p>围绕充电、文具、收纳及差旅清洁等即时需求，形成可快速采购的补给清单。</p>
+                <span class="solution-open"><span>4个品牌 · 7项推荐</span><i>→</i></span>
+              </span>
+            </button>
+            <button class="solution-choice recovery" data-solution="recovery">
+              <span class="solution-visual"><img src="fast-assets-v2/asset-0c339eda14fd2005.webp?v=20261016-1" alt="候机状态恢复商品类型示意图"><span class="solution-scene">身心状态</span></span>
+              <span class="solution-choice-copy">
+                <span class="solution-no">02</span>
+                <h3>候机状态恢复</h3>
+                <p>结合候机时长配置便携放松设备、短时按摩及商务形象整理服务。</p>
+                <span class="solution-open"><span>3个品牌 · 6项推荐</span><i>→</i></span>
+              </span>
+            </button>
+            <button class="solution-choice gift" data-solution="gift">
+              <span class="solution-visual"><img src="fast-assets-v2/asset-6631662706e8ccea.webp?v=20261016-1" alt="临时商务礼品商品类型示意图"><span class="solution-scene">客户礼赠</span></span>
+              <span class="solution-choice-copy">
+                <span class="solution-no">03</span>
+                <h3>临时商务礼品</h3>
+                <p>按照赠礼对象、使用场景与预算，匹配科技办公、地域特色及品质生活礼品。</p>
+                <span class="solution-open"><span>5个品牌 · 6项推荐</span><i>→</i></span>
+              </span>
+            </button>
+          </div>
+          <div class="solution-bottom">
+            <div><b>候机时间</b>按15分钟、30分钟及充足候机时间匹配可完成的商品或服务。</div>
+            <div><b>采购预算</b>支持单品、双品与场景组合，快速形成清晰的采购建议。</div>
+            <div><b>商务用途</b>覆盖自用补给、会面前状态整理与客户礼赠三类场景。</div>
+          </div>
         </div>
       </section>
       <section class="page" id="journey">
         <div class="page-logo">
-          <img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/logo.jpg?v=20260930-1" alt="MIXC AIR">
+          <img src="fast-assets-v1/logo.jpg?v=20261016-1" alt="MIXC AIR">
         </div>
         <div class="wrap">
           <p class="eyebrow">安全办公计划</p>
@@ -1876,7 +2074,7 @@
               <h3 id="journeyShop" style="color: #fff">当前安排｜MOLLYTEA / 瑞幸咖啡｜近 安检外</h3>
               <p id="journeyCopy" class="micro" style="color: #d7e4eb">中央集中区 → 安检外｜临近 安检外。当前可安排约 314 分钟，并已保留安全缓冲。</p>
               <div class="journey-meta" id="journeyMeta"><span>当前区域：中央集中区</span><span>目标：近 安检外</span><span>安全窗口：314分钟</span></div>
-              <div class="journey-preview" id="journeyPreview"><img loading="lazy" decoding="async" fetchpriority="low" src="fast-assets-v1/p35.jpg?v=20260930-1" alt="MOLLYTEA / 瑞幸咖啡现场照片"><div><b>MOLLYTEA / 瑞幸咖啡</b><span>安检外｜临近 安检外</span><span>当前目标点位现场图</span></div></div>
+              <div class="journey-preview" id="journeyPreview"><img src="fast-assets-v1/p35.jpg?v=20261016-1" alt="MOLLYTEA / 瑞幸咖啡现场照片"><div><b>MOLLYTEA / 瑞幸咖啡</b><span>安检外｜临近 安检外</span><span>当前目标点位现场图</span></div></div>
               <div class="timeline" id="timeline"><div class="time"><i style="background:#fff;color:#082f54">01</i><div><b style="color:#fff">现在出发</b><span style="color:#d7e4eb">依据现场导向前往目标区域</span></div></div><div class="time"><i style="background:#fff;color:#082f54">02</i><div><b style="color:#fff">开始办公</b><span style="color:#d7e4eb">抵达后完成核心事务</span></div></div><div class="time"><i style="background:#fff;color:#082f54">03</i><div><b style="color:#fff">收尾返回</b><span style="color:#d7e4eb">保存文件并按现场导向返回登机口方向</span></div></div></div>
               <div class="actions" style="margin-top: 15px">
                 <button class="btn gold" id="copyPlan">复制安全办公计划</button><button class="btn" id="journeyMap">查看常亮导航</button>
@@ -1916,8 +2114,54 @@
       </section>
     </main>
     <nav class="bottom">
-      <a href="#home" class="active">服务入口</a><a href="#recommend" class="">附近优选</a><a href="#map" class="">点位地图</a><a href="#corridors" class="">分区点位</a><a href="#public" class="">公共办公区</a><a href="#journey" class="">安全计划</a>
+      <a href="#home" class="active">服务入口</a><a href="#recommend" class="">附近优选</a><a href="#map" class="">点位地图</a><a href="#corridors" class="">分区点位</a><a href="#public" class="">公共办公区</a><a href="#solutions" class="">商务补给</a><a href="#journey" class="">安全计划</a>
     </nav>
+
+    <div class="modal hidden" id="commerceModal" role="dialog" aria-modal="true" aria-label="商务需求商品推荐">
+      <section class="commerce-panel" id="commercePanel" data-theme="emergency">
+        <header class="commerce-head">
+          <img class="commerce-head-visual" id="commerceHero" alt="场景商品示意图">
+          <div class="commerce-head-copy"><p>商务出行需求方案</p><h2 id="commerceTitle">出差应急补给</h2><span id="commerceSubtitle"></span></div>
+          <button class="close" id="closeCommerce" aria-label="返回或关闭">×</button>
+        </header>
+        <div class="commerce-body">
+          <aside class="commerce-side">
+            <div class="commerce-categories" id="commerceCategories"></div>
+            <div class="commerce-summary" id="commerceSummary"></div>
+            <b style="color:#082f54">快捷组合</b>
+            <div class="preset-list" id="presetList"></div>
+            <p class="commerce-disclaimer">图片用于展示商品或服务类型。库存、可预约时段及成交价格以机场门店实时信息为准。</p>
+          </aside>
+          <main class="commerce-main">
+            <div class="brand-tabs" id="brandTabs"></div>
+            <p class="brand-intro" id="brandIntro"></p>
+            <div class="product-grid" id="productGrid"></div>
+          </main>
+        </div>
+        <footer class="combo-dock">
+          <div><b id="comboName">尚未选择商品</b><br><span id="comboItems">可直接选择单品，也可采用快捷组合。</span></div>
+          <span class="combo-total" id="comboTotal">¥0</span>
+          <button class="btn primary" id="generateCombo">生成推荐清单</button>
+        </footer>
+      </section>
+    </div>
+    <div class="modal hidden" id="chargingModal" role="dialog" aria-modal="true" aria-label="快速充电服务">
+      <section class="charge-panel">
+        <header class="commerce-head">
+          <div><p>公共办公区配套</p><h2>快速充电服务</h2><span>先展示服务入口，具体点位与现场照片待补充。</span></div>
+          <button class="close" id="closeCharging" aria-label="关闭">×</button>
+        </header>
+        <div class="charge-body">
+          <div class="charge-grid">
+            <div class="charge-item"><i>01</i><b>座席充电位</b><span>适配电脑与手机短时补电；接口类型和可用数量以现场为准。</span></div>
+            <div class="charge-item"><i>02</i><b>共享充电设备</b><span>后续接入设备点位、计费方式和归还规则。</span></div>
+            <div class="charge-item"><i>03</i><b>应急线材补给</b><span>可联动“出差应急补给”查看充电头、线材与移动电源。</span></div>
+          </div>
+          <p class="charge-pending">待补充：各公共休息区具体位置、临近登机口、接口规格、设备数量及现场图。</p>
+          <div class="actions" style="margin-top:16px"><button class="btn primary" id="chargeToSupply">查看应急补给</button><button class="btn" id="chargeBack">返回公共办公区</button></div>
+        </div>
+      </section>
+    </div>
     <div class="modal hidden" id="availabilityModal" role="dialog" aria-modal="true" aria-label="商户接待能力">
       <section class="availability">
         <header class="availability-top">
@@ -1989,7 +2233,7 @@
     </div>
     <div class="modal hidden" id="photoModal" role="dialog" aria-modal="true" aria-label="现场图片">
       <section class="photo-dialog">
-        <img loading="lazy" decoding="async" fetchpriority="low" id="photoModalImage" alt="盟世玉现场照片" src="fast-assets-v1/p14.jpg?v=20260930-1">
+        <img id="photoModalImage" alt="盟世玉现场照片" src="fast-assets-v1/p14.jpg?v=20261016-1">
         <div class="photo-dialog-copy">
           <div>
             <h3 id="photoModalTitle">盟世玉</h3>
@@ -2040,7 +2284,7 @@
     </div>
     <div class="toast" id="toast">预约凭证已生成，请向门店服务人员出示。</div>
     <script>
-      window.__ASSETS__={"assets/logo.jpg":"fast-assets-v1/logo.jpg?v=20260930-1","assets/map.png":"fast-assets-v1/map.webp?v=20260930-1","assets/p1.jpg":"fast-assets-v1/p1.jpg?v=20260930-1","assets/p10.jpg":"fast-assets-v1/p10.jpg?v=20260930-1","assets/p11.jpg":"fast-assets-v1/p11.jpg?v=20260930-1","assets/p12.jpg":"fast-assets-v1/p12.jpg?v=20260930-1","assets/p13.jpg":"fast-assets-v1/p13.jpg?v=20260930-1","assets/p14.jpg":"fast-assets-v1/p14.jpg?v=20260930-1","assets/p15.jpg":"fast-assets-v1/p15.jpg?v=20260930-1","assets/p16.jpg":"fast-assets-v1/p16.jpg?v=20260930-1","assets/p17.jpg":"fast-assets-v1/p17.jpg?v=20260930-1","assets/p18.jpg":"fast-assets-v1/p18.jpg?v=20260930-1","assets/p19.jpg":"fast-assets-v1/p19.jpg?v=20260930-1","assets/p2.jpg":"fast-assets-v1/p2.jpg?v=20260930-1","assets/p20.jpg":"fast-assets-v1/p20.jpg?v=20260930-1","assets/p21.jpg":"fast-assets-v1/p21.jpg?v=20260930-1","assets/p22.jpg":"fast-assets-v1/p22.jpg?v=20260930-1","assets/p23.jpg":"fast-assets-v1/p23.jpg?v=20260930-1","assets/p24.jpg":"fast-assets-v1/p24.jpg?v=20260930-1","assets/p25.jpg":"fast-assets-v1/p25.jpg?v=20260930-1","assets/p26.jpg":"fast-assets-v1/p26.jpg?v=20260930-1","assets/p27.jpg":"fast-assets-v1/p27.jpg?v=20260930-1","assets/p28.jpg":"fast-assets-v1/p28.jpg?v=20260930-1","assets/p29.jpg":"fast-assets-v1/p29.jpg?v=20260930-1","assets/p3.jpg":"fast-assets-v1/p3.jpg?v=20260930-1","assets/p30.jpg":"fast-assets-v1/p30.jpg?v=20260930-1","assets/p31.jpg":"fast-assets-v1/p31.jpg?v=20260930-1","assets/p32.jpg":"fast-assets-v1/p32.jpg?v=20260930-1","assets/p33.jpg":"fast-assets-v1/p33.jpg?v=20260930-1","assets/p34.jpg":"fast-assets-v1/p34.jpg?v=20260930-1","assets/p35.jpg":"fast-assets-v1/p35.jpg?v=20260930-1","assets/p36.jpg":"fast-assets-v1/p36.jpg?v=20260930-1","assets/p37.jpg":"fast-assets-v1/p37.jpg?v=20260930-1","assets/p38.jpg":"fast-assets-v1/p38.jpg?v=20260930-1","assets/p39.jpg":"fast-assets-v1/p39.jpg?v=20260930-1","assets/p4.jpg":"fast-assets-v1/p4.jpg?v=20260930-1","assets/p40.jpg":"fast-assets-v1/p40.jpg?v=20260930-1","assets/p41.jpg":"fast-assets-v1/p41.jpg?v=20260930-1","assets/p42.jpg":"fast-assets-v1/p42.jpg?v=20260930-1","assets/p43.jpg":"fast-assets-v1/p43.jpg?v=20260930-1","assets/p44.jpg":"fast-assets-v1/p44.jpg?v=20260930-1","assets/p45.jpg":"fast-assets-v1/p45.jpg?v=20260930-1","assets/p46.jpg":"fast-assets-v1/p46.jpg?v=20260930-1","assets/p47.jpg":"fast-assets-v1/p47.jpg?v=20260930-1","assets/p48.jpg":"fast-assets-v1/p48.jpg?v=20260930-1","assets/p49.jpg":"fast-assets-v1/p49.jpg?v=20260930-1","assets/p5.jpg":"fast-assets-v1/p5.jpg?v=20260930-1","assets/p50.jpg":"fast-assets-v1/p50.jpg?v=20260930-1","assets/p51.jpg":"fast-assets-v1/p51.jpg?v=20260930-1","assets/p52.jpg":"fast-assets-v1/p52.jpg?v=20260930-1","assets/p53.jpg":"fast-assets-v1/p53.jpg?v=20260930-1","assets/p54.jpg":"fast-assets-v1/p54.jpg?v=20260930-1","assets/p55.jpg":"fast-assets-v1/p55.jpg?v=20260930-1","assets/p56.jpg":"fast-assets-v1/p56.jpg?v=20260930-1","assets/p57.jpg":"fast-assets-v1/p57.jpg?v=20260930-1","assets/p58.jpg":"fast-assets-v1/p58.jpg?v=20260930-1","assets/p59.jpg":"fast-assets-v1/p59.jpg?v=20260930-1","assets/p6.jpg":"fast-assets-v1/p6.jpg?v=20260930-1","assets/p60.jpg":"fast-assets-v1/p60.jpg?v=20260930-1","assets/p61.jpg":"fast-assets-v1/p61.jpg?v=20260930-1","assets/p62.jpg":"fast-assets-v1/p62.jpg?v=20260930-1","assets/p63.jpg":"fast-assets-v1/p63.jpg?v=20260930-1","assets/p64.jpg":"fast-assets-v1/p64.jpg?v=20260930-1","assets/p7.jpg":"fast-assets-v1/p7.jpg?v=20260930-1","assets/p8.jpg":"fast-assets-v1/p8.jpg?v=20260930-1","assets/p9.jpg":"fast-assets-v1/p9.jpg?v=20260930-1"};
+      window.__ASSETS__={"assets/logo.jpg":"fast-assets-v1/logo.jpg?v=20261016-1","assets/map.png":"fast-assets-v1/map.png?v=20261016-1","assets/p1.jpg":"fast-assets-v1/p1.jpg?v=20261016-1","assets/p10.jpg":"fast-assets-v1/p10.jpg?v=20261016-1","assets/p11.jpg":"fast-assets-v1/p11.jpg?v=20261016-1","assets/p12.jpg":"fast-assets-v1/p12.jpg?v=20261016-1","assets/p13.jpg":"fast-assets-v1/p13.jpg?v=20261016-1","assets/p14.jpg":"fast-assets-v1/p14.jpg?v=20261016-1","assets/p15.jpg":"fast-assets-v1/p15.jpg?v=20261016-1","assets/p16.jpg":"fast-assets-v1/p16.jpg?v=20261016-1","assets/p17.jpg":"fast-assets-v1/p17.jpg?v=20261016-1","assets/p18.jpg":"fast-assets-v1/p18.jpg?v=20261016-1","assets/p19.jpg":"fast-assets-v1/p19.jpg?v=20261016-1","assets/p2.jpg":"fast-assets-v1/p2.jpg?v=20261016-1","assets/p20.jpg":"fast-assets-v1/p20.jpg?v=20261016-1","assets/p21.jpg":"fast-assets-v1/p21.jpg?v=20261016-1","assets/p22.jpg":"fast-assets-v1/p22.jpg?v=20261016-1","assets/p23.jpg":"fast-assets-v1/p23.jpg?v=20261016-1","assets/p24.jpg":"fast-assets-v1/p24.jpg?v=20261016-1","assets/p25.jpg":"fast-assets-v1/p25.jpg?v=20261016-1","assets/p26.jpg":"fast-assets-v1/p26.jpg?v=20261016-1","assets/p27.jpg":"fast-assets-v1/p27.jpg?v=20261016-1","assets/p28.jpg":"fast-assets-v1/p28.jpg?v=20261016-1","assets/p29.jpg":"fast-assets-v1/p29.jpg?v=20261016-1","assets/p3.jpg":"fast-assets-v1/p3.jpg?v=20261016-1","assets/p30.jpg":"fast-assets-v1/p30.jpg?v=20261016-1","assets/p31.jpg":"fast-assets-v1/p31.jpg?v=20261016-1","assets/p32.jpg":"fast-assets-v1/p32.jpg?v=20261016-1","assets/p33.jpg":"fast-assets-v1/p33.jpg?v=20261016-1","assets/p34.jpg":"fast-assets-v1/p34.jpg?v=20261016-1","assets/p35.jpg":"fast-assets-v1/p35.jpg?v=20261016-1","assets/p36.jpg":"fast-assets-v1/p36.jpg?v=20261016-1","assets/p37.jpg":"fast-assets-v1/p37.jpg?v=20261016-1","assets/p38.jpg":"fast-assets-v1/p38.jpg?v=20261016-1","assets/p39.jpg":"fast-assets-v1/p39.jpg?v=20261016-1","assets/p4.jpg":"fast-assets-v1/p4.jpg?v=20261016-1","assets/p40.jpg":"fast-assets-v1/p40.jpg?v=20261016-1","assets/p41.jpg":"fast-assets-v1/p41.jpg?v=20261016-1","assets/p42.jpg":"fast-assets-v1/p42.jpg?v=20261016-1","assets/p43.jpg":"fast-assets-v1/p43.jpg?v=20261016-1","assets/p44.jpg":"fast-assets-v1/p44.jpg?v=20261016-1","assets/p45.jpg":"fast-assets-v1/p45.jpg?v=20261016-1","assets/p46.jpg":"fast-assets-v1/p46.jpg?v=20261016-1","assets/p47.jpg":"fast-assets-v1/p47.jpg?v=20261016-1","assets/p48.jpg":"fast-assets-v1/p48.jpg?v=20261016-1","assets/p49.jpg":"fast-assets-v1/p49.jpg?v=20261016-1","assets/p5.jpg":"fast-assets-v1/p5.jpg?v=20261016-1","assets/p50.jpg":"fast-assets-v1/p50.jpg?v=20261016-1","assets/p51.jpg":"fast-assets-v1/p51.jpg?v=20261016-1","assets/p52.jpg":"fast-assets-v1/p52.jpg?v=20261016-1","assets/p53.jpg":"fast-assets-v1/p53.jpg?v=20261016-1","assets/p54.jpg":"fast-assets-v1/p54.jpg?v=20261016-1","assets/p55.jpg":"fast-assets-v1/p55.jpg?v=20261016-1","assets/p56.jpg":"fast-assets-v1/p56.jpg?v=20261016-1","assets/p57.jpg":"fast-assets-v1/p57.jpg?v=20261016-1","assets/p58.jpg":"fast-assets-v1/p58.jpg?v=20261016-1","assets/p59.jpg":"fast-assets-v1/p59.jpg?v=20261016-1","assets/p6.jpg":"fast-assets-v1/p6.jpg?v=20261016-1","assets/p60.jpg":"fast-assets-v1/p60.jpg?v=20261016-1","assets/p61.jpg":"fast-assets-v1/p61.jpg?v=20261016-1","assets/p62.jpg":"fast-assets-v1/p62.jpg?v=20261016-1","assets/p63.jpg":"fast-assets-v1/p63.jpg?v=20261016-1","assets/p64.jpg":"fast-assets-v1/p64.jpg?v=20261016-1","assets/p7.jpg":"fast-assets-v1/p7.jpg?v=20261016-1","assets/p8.jpg":"fast-assets-v1/p8.jpg?v=20261016-1","assets/p9.jpg":"fast-assets-v1/p9.jpg?v=20261016-1"};
     </script>
     <script>
       const A = window.__ASSETS__;
@@ -2475,6 +2719,7 @@
       ];
       const $ = (s) => document.querySelector(s),
         $$ = (s) => [...document.querySelectorAll(s)];
+      const commerceCatalog = {"emergency":{"number":"01","title":"出差应急补给","subtitle":"高频差旅物品的即时补充","summary":"围绕充电、文具、收纳及差旅清洁等即时需求，形成可快速采购的补给清单。","hero":"fast-assets-v2/asset-fff584617d3fbcc5.webp?v=20261016-1","brands":[{"name":"MUJI to GO","intro":"轻量、耐用、即买即用的旅行用品。"},{"name":"几何之厦","intro":"商务文具、阅读与差旅收纳补给。"},{"name":"名创优品","intro":"高频应急小物，适合快速补齐。"},{"name":"蔚蓝书店","intro":"阅读、记录与会议前临时补给。"}],"products":[{"id":"muji-neck","brand":"MUJI to GO","name":"舒适颈部靠枕","desc":"长航程或转机休息，体积小、可随身携带。","price":98,"priceText":"¥98","kind":"公开价","badge":"过夜差旅","image":"fast-assets-v2/asset-cef13512f2c4439a.webp?v=20261016-1"},{"id":"muji-organizer","brand":"MUJI to GO","name":"数码收纳包","desc":"集中收纳充电线、转接头、U盘和移动硬盘。","price":28,"priceText":"¥28起","kind":"公开价","badge":"线材归整","image":"fast-assets-v2/asset-6553906e0551db8d.webp?v=20261016-1"},{"id":"miniso-charge","brand":"名创优品","name":"20W快充补给包","desc":"充电头＋快充线，适合遗忘或线材损坏时应急。","price":99,"priceText":"建议 ¥99","kind":"建议价","badge":"即刻补电","image":"fast-assets-v2/asset-8080f69e8af1658d.webp?v=20261016-1"},{"id":"miniso-power","brand":"名创优品","name":"移动电源＋转换插头","desc":"覆盖候机、落地打车和跨城转接的连续用电。","price":159,"priceText":"建议 ¥159","kind":"建议价","badge":"跨城出行","image":"fast-assets-v2/asset-46e88e95d9b6fb13.webp?v=20261016-1"},{"id":"geometry-note","brand":"几何之厦","name":"随行记录套装","desc":"A5笔记本＋金属笔，适合会议纪要与临时签批。","price":79,"priceText":"建议 ¥79","kind":"建议价","badge":"会议记录","image":"fast-assets-v2/asset-f2b7417712599d8f.webp?v=20261016-1"},{"id":"geometry-doc","brand":"几何之厦","name":"差旅文件收纳套装","desc":"文件袋＋行李牌，集中收妥证件、票据和合同。","price":129,"priceText":"建议 ¥129","kind":"建议价","badge":"文件整理","image":"fast-assets-v2/asset-854b0f78c50b58ad.webp?v=20261016-1"},{"id":"weilan-reading","brand":"蔚蓝书店","name":"商务阅读补给","desc":"商业读物＋便签＋签字笔，适合候机复盘与准备。","price":88,"priceText":"建议 ¥88","kind":"建议价","badge":"候机阅读","image":"fast-assets-v2/asset-f2b7417712599d8f.webp?v=20261016-1"}],"presets":[{"name":"15分钟轻装补给","ids":["miniso-charge","geometry-note"]},{"name":"过夜差旅补给","ids":["muji-neck","muji-organizer","miniso-power"]},{"name":"高效会议补给","ids":["miniso-charge","geometry-note","geometry-doc"]}]},"recovery":{"number":"02","title":"候机状态恢复","subtitle":"按候机时长配置恢复方案","summary":"结合候机时长配置便携放松设备、短时按摩及商务形象整理服务。","hero":"fast-assets-v2/asset-0c339eda14fd2005.webp?v=20261016-1","brands":[{"name":"倍轻松 breo","intro":"便携式颈部、眼部放松设备，适合带走继续使用。"},{"name":"卡纷按摩","intro":"短时肩颈与全身放松服务，按候机时长选择。"},{"name":"盛庄悦发","intro":"快速洗护、造型与头皮舒缓，适合会面前整理状态。"}],"products":[{"id":"breo-neck","brand":"倍轻松 breo","name":"Neck 5 Lite 颈部按摩器","desc":"适合高铁、航班和酒店场景的便携肩颈放松。","price":799,"priceText":"参考 ¥799起","kind":"参考价","badge":"可随身携带","image":"fast-assets-v2/asset-c2f263726e64beba.webp?v=20261016-1"},{"id":"breo-eye","brand":"倍轻松 breo","name":"See 系列眼部按摩器","desc":"会议前闭眼休息，适合长时间屏幕办公人群。","price":999,"priceText":"参考 ¥999起","kind":"参考价","badge":"屏幕办公","image":"fast-assets-v2/asset-b33dec210567e202.webp?v=20261016-1"},{"id":"caffon-neck","brand":"卡纷按摩","name":"肩颈快速恢复 20分钟","desc":"适合登机前短窗口，重点放松肩颈与上背。","price":98,"priceText":"建议 ¥98起","kind":"建议服务价","badge":"20分钟","image":"fast-assets-v2/asset-b1378812cce3eeb6.webp?v=20261016-1"},{"id":"caffon-rest","brand":"卡纷按摩","name":"全身舒缓 30分钟","desc":"候机时间充足时使用，结束后预留返回登机口时间。","price":138,"priceText":"建议 ¥138起","kind":"建议服务价","badge":"30分钟","image":"fast-assets-v2/asset-7af38f059da22404.webp?v=20261016-1"},{"id":"salon-style","brand":"盛庄悦发","name":"快速洗发造型","desc":"落地会面或转场前完成基础清洁与商务造型。","price":128,"priceText":"建议 ¥128起","kind":"建议服务价","badge":"会面前","image":"fast-assets-v2/asset-006a5b337579435f.webp?v=20261016-1"},{"id":"salon-scalp","brand":"盛庄悦发","name":"头皮舒缓护理","desc":"长途出行后的头皮清洁与舒缓，按时间预约。","price":198,"priceText":"建议 ¥198起","kind":"建议服务价","badge":"40分钟","image":"fast-assets-v2/asset-46c47f89c15d1744.webp?v=20261016-1"}],"presets":[{"name":"20分钟快速恢复","ids":["caffon-neck"]},{"name":"会面前状态整理","ids":["salon-style","breo-eye"]},{"name":"差旅随身恢复","ids":["breo-neck","breo-eye"]}]},"gift":{"number":"03","title":"临时商务礼品","subtitle":"按对象、场景与预算匹配礼品","summary":"按照赠礼对象、使用场景与预算，匹配科技办公、地域特色及品质生活礼品。","hero":"fast-assets-v2/asset-6631662706e8ccea.webp?v=20261016-1","brands":[{"name":"科大讯飞","intro":"适合会议记录、翻译和高频差旅的科技办公礼品。"},{"name":"片仔癀","intro":"品质护理类礼赠，适合作为稳妥的关怀型礼品。"},{"name":"泾渭茯茶","intro":"陕西地域特色茶礼，适合客户拜访和会议伴手礼。"},{"name":"KORU","intro":"新西兰生活方式礼品，覆盖蜂蜜、手工皂与香氛。"},{"name":"百瑞源枸杞","intro":"宁夏枸杞与八宝茶礼盒，轻便、易分享。"}],"products":[{"id":"iflytek-pokee","brand":"科大讯飞","name":"AI录音笔 Pokee 64GB","desc":"轻便录音、转写与会议纪要，适合高频商务客群。","price":549,"priceText":"¥549","kind":"公开价","badge":"科技办公","image":"fast-assets-v2/asset-08934df62e580805.webp?v=20261016-1"},{"id":"iflytek-card","brand":"科大讯飞","name":"讯飞AI录音卡","desc":"卡片形态便于随身携带，适合会议与采访场景。","price":999,"priceText":"¥999","kind":"公开价","badge":"高端商务","image":"fast-assets-v2/asset-08934df62e580805.webp?v=20261016-1"},{"id":"pzh-care","brand":"片仔癀","name":"商务护理礼盒","desc":"护手与基础润肤组合，避免医疗功效表达。","price":298,"priceText":"建议 ¥298","kind":"建议价","badge":"关怀型礼赠","image":"fast-assets-v2/asset-69b375574618e36c.webp?v=20261016-1"},{"id":"jingwei-tea","brand":"泾渭茯茶","name":"便携茯茶礼盒","desc":"突出陕西地域特色，适合客户拜访与会议伴手礼。","price":238,"priceText":"建议 ¥238","kind":"建议价","badge":"陕西特色","image":"fast-assets-v2/asset-ea90fceb913f468c.webp?v=20261016-1"},{"id":"koru-set","brand":"KORU","name":"麦卢卡蜂蜜＋手工皂礼盒","desc":"新西兰生活方式组合，适合女性客户与家庭赠礼。","price":398,"priceText":"建议 ¥398","kind":"建议价","badge":"品质生活","image":"fast-assets-v2/asset-fb9b4ca5053b590f.webp?v=20261016-1"},{"id":"bairuiyuan-tea","brand":"百瑞源枸杞","name":"枸杞八宝茶礼盒","desc":"便于携带和多人分享，适合团队拜访与日常答谢。","price":268,"priceText":"建议 ¥268","kind":"建议价","badge":"团队分享","image":"fast-assets-v2/asset-f3ac1509aac96d0c.webp?v=20261016-1"}],"presets":[{"name":"陕西伴手礼","ids":["jingwei-tea","bairuiyuan-tea"]},{"name":"高效办公礼","ids":["iflytek-pokee"]},{"name":"品质关怀礼","ids":["pzh-care","koru-set"]}]}};
       const state = {
         traveller: "departure",
         need: "work",
@@ -2525,9 +2770,7 @@
           .map(([k, v]) => `<option value="${k}">${v.name}</option>`)
           .join("");
         $("#zone").innerHTML = o;
-        $("#arrivalZone").innerHTML = o;
         $("#zone").value = state.zone;
-        $("#arrivalZone").value = "central";
       }
       function minutes(shop) {
         if (state.traveller === "arrival")
@@ -2578,13 +2821,13 @@
         $("#arrivalForm").classList.toggle("hidden", !arrival);
         $("#bufferWrap").classList.toggle("hidden", arrival);
         $("#homeStatus").textContent = arrival
-          ? "到达旅客｜请确认当前区域"
+          ? "到达旅客｜请填写到达登机口"
           : "出发旅客｜请录入登机信息";
         $("#homeStatusText").textContent = arrival
-          ? "显示到达出口与中央区域的商务短停资源。"
+          ? "根据到达登机口匹配所在指廊附近资源。"
           : "根据登机时间、登机口和安全缓冲生成建议。";
         state.zone = arrival
-          ? $("#arrivalZone").value
+          ? gateZone($("#arrivalGate").value) || state.zone
           : $("#zone").value || state.zone;
         state.userXY = null;
         state.positionMode = false;
@@ -2606,7 +2849,7 @@
                   : m === "—"
                     ? "请先填写登机时间"
                     : `可安排约 ${m} 分钟`;
-            return `<article class="reco"><span class="rank">0${i + 1}</span><img loading="lazy" decoding="async" fetchpriority="low" src="${img(s.photos[0])}" alt="${s.name}现场照片"><div><b>${s.name}｜近 ${s.gates}</b><span>${zoneName(s.zone)}｜登机口导向 ${s.gates}</span><span>${s.desc}</span><span class="tag green">${meta}</span></div><button class="btn primary sm" data-plan="${s.id}">纳入行程</button></article>`;
+            return `<article class="reco"><span class="rank">0${i + 1}</span><img src="${img(s.photos[0])}" alt="${s.name}现场照片"><div><b>${s.name}｜近 ${s.gates}</b><span>${zoneName(s.zone)}｜登机口导向 ${s.gates}</span><span>${s.desc}</span><span class="tag green">${meta}</span></div><button class="btn primary sm" data-plan="${s.id}">纳入行程</button></article>`;
           })
           .join("");
       }
@@ -2746,8 +2989,8 @@
             .join("");
         $("#mapDetail").innerHTML =
           state.mapTargetKind === "public"
-            ? `<img loading="lazy" decoding="async" fetchpriority="low" src="${img(sel.photos[0])}" alt="${sel.name}现场照片"><span class="tag green">${zoneName(sel.zone)}</span><h3>${sel.name}｜近 ${sel.gates}</h3><p>${sel.desc}</p><p class="micro">临近登机口：${sel.gates}<br>公共区域免费使用，座位余量以现场为准。</p><div class="actions"><button class="btn sm" data-photo="public:${sel.id}:0">查看现场</button><button class="btn sm" data-publiczone="${sel.zone}">查看公共办公区</button></div>`
-            : `<img loading="lazy" decoding="async" fetchpriority="low" src="${img(sel.photos[0])}" alt="${sel.name}现场照片"><span class="tag">${zoneName(sel.zone)}</span><h3>${sel.name}｜近 ${sel.gates}</h3><p>${sel.desc}</p><p class="micro">登机口导向：${sel.gates}<br>路线已在地图上常亮显示。</p><div class="actions"><button class="btn sm" data-photo="shop:${sel.id}:0">查看现场</button><button class="btn sm" data-corridor="${sel.zone}">查看分区点位</button><button class="btn primary sm" data-plan="${sel.id}">纳入行程</button></div>`;
+            ? `<img src="${img(sel.photos[0])}" alt="${sel.name}现场照片"><span class="tag green">${zoneName(sel.zone)}</span><h3>${sel.name}｜近 ${sel.gates}</h3><p>${sel.desc}</p><p class="micro">临近登机口：${sel.gates}<br>公共区域免费使用，座位余量以现场为准。</p><div class="actions"><button class="btn sm" data-photo="public:${sel.id}:0">查看现场</button><button class="btn sm" data-publiczone="${sel.zone}">查看公共办公区</button><button class="btn primary sm" data-charge>快速充电服务</button></div>`
+            : `<img src="${img(sel.photos[0])}" alt="${sel.name}现场照片"><span class="tag">${zoneName(sel.zone)}</span><h3>${sel.name}｜近 ${sel.gates}</h3><p>${sel.desc}</p><p class="micro">登机口导向：${sel.gates}<br>路线已在地图上常亮显示。</p><div class="actions"><button class="btn sm" data-photo="shop:${sel.id}:0">查看现场</button><button class="btn sm" data-corridor="${sel.zone}">查看分区点位</button><button class="btn primary sm" data-plan="${sel.id}">纳入行程</button></div>`;
         $$("[data-mapfilter]").forEach((b) =>
           b.classList.toggle("active", b.dataset.mapfilter === state.mapFilter),
         );
@@ -2769,7 +3012,7 @@
           ? list
               .map(
                 (s) =>
-                  `<article class="shop"><img loading="lazy" decoding="async" fetchpriority="low" src="${img(s.photos[0])}" alt="${s.name}现场照片"><div class="copy"><span class="gate">登机口导向：${s.gates}</span><h3>${s.name}｜近 ${s.gates}</h3><p>${s.desc}</p><div class="actions"><button class="btn sm" data-photo="shop:${s.id}">查看现场</button><button class="btn sm" data-map="${s.id}">地图位置</button><button class="btn primary sm" data-plan="${s.id}">纳入行程</button></div></div></article>`,
+                  `<article class="shop"><img src="${img(s.photos[0])}" alt="${s.name}现场照片"><div class="copy"><span class="gate">登机口导向：${s.gates}</span><h3>${s.name}｜近 ${s.gates}</h3><p>${s.desc}</p><div class="actions"><button class="btn sm" data-photo="shop:${s.id}">查看现场</button><button class="btn sm" data-map="${s.id}">地图位置</button><button class="btn primary sm" data-plan="${s.id}">纳入行程</button></div></div></article>`,
               )
               .join("")
           : '<p class="micro">该区域暂无商户点位，可查看下方公共服务资源。</p>';
@@ -2805,7 +3048,7 @@
             )
             .map(
               ({ x, photo, i }) =>
-                `<article class="shop"><img loading="lazy" decoding="async" fetchpriority="low" src="${img(photo)}" alt="${x.name}${scenes[i]}实景照片"><div class="copy"><span class="gate">${scenes[i]}｜近 ${x.gates}</span><h3>${x.name}｜近 ${x.gates}</h3><p>${x.desc}</p><div class="actions"><button class="btn sm" data-photo="public:${x.id}:${i}">查看现场</button><button class="btn sm" data-publicmap="${x.id}">地图位置</button></div></div></article>`,
+                `<article class="shop"><img src="${img(photo)}" alt="${x.name}${scenes[i]}实景照片"><div class="copy"><span class="gate">${scenes[i]}｜近 ${x.gates}</span><h3>${x.name}｜近 ${x.gates}</h3><p>${x.desc}</p><div class="actions"><button class="btn sm" data-photo="public:${x.id}:${i}">查看现场</button><button class="btn sm" data-publicmap="${x.id}">地图位置</button><button class="btn primary sm" data-charge>快速充电服务</button></div></div></article>`,
             )
             .join("") || '<p class="micro">该区域公共资源信息待补充。</p>';
         bindDynamic();
@@ -2829,7 +3072,7 @@
               ? "请补充登机时间，以计算可用窗口。"
               : "当前可安排约 " + m + " 分钟，并已保留安全缓冲。");
         $("#journeyPreview").innerHTML =
-          `<img loading="lazy" decoding="async" fetchpriority="low" src="${img(s.photos[0])}" alt="${s.name}现场照片"><div><b>${s.name}</b><span>${zoneName(s.zone)}｜临近 ${s.gates}</span><span>当前目标点位现场图</span></div>`;
+          `<img src="${img(s.photos[0])}" alt="${s.name}现场照片"><div><b>${s.name}</b><span>${zoneName(s.zone)}｜临近 ${s.gates}</span><span>当前目标点位现场图</span></div>`;
         $("#journeyMeta").innerHTML =
           `<span>当前区域：${zoneName(state.zone)}</span><span>目标：近 ${s.gates}</span><span>安全窗口：${m === "—" ? "待核验" : m + "分钟"}</span>`;
         let rows =
@@ -2964,7 +3207,7 @@
       }
       function showFlightIntegration() {
         const time = $("#boarding").value || "待录入";
-        const gate = $("#gate").value || "待录入";
+        const gate = state.traveller === "arrival" ? ($("#arrivalGate").value || "待录入") : ($("#gate").value || "待录入");
         const gateText = gate === "待录入" ? gate : gateLabel(gate);
         const suggested = recommendations()[0] || currentShop();
         const safeMinutes = minutes(suggested);
@@ -3000,6 +3243,78 @@
           `${zoneName(point.zone)}｜临近 ${point.gates}｜${point.desc}`;
         $("#photoModal").classList.remove("hidden");
       }
+
+      const commerceState = { category: "emergency", brand: "all", selected: [] };
+      function commerceCategory() { return commerceCatalog[commerceState.category]; }
+      function commerceProduct(id) {
+        for (const c of Object.values(commerceCatalog)) {
+          const product = c.products.find((p) => p.id === id);
+          if (product) return product;
+        }
+        return null;
+      }
+      function openCommerce(category = "emergency") {
+        commerceState.category = commerceCatalog[category] ? category : "emergency";
+        commerceState.brand = "all";
+        commerceState.selected = [];
+        renderCommerce();
+        $("#commerceModal").classList.remove("hidden");
+      }
+      function setCommerceCategory(category) {
+        commerceState.category = category;
+        commerceState.brand = "all";
+        commerceState.selected = [];
+        renderCommerce();
+      }
+      function setCommerceBrand(brand) {
+        commerceState.brand = brand;
+        renderCommerce();
+      }
+      function applyCommercePreset(index) {
+        const preset = commerceCategory().presets[index];
+        commerceState.selected = preset ? [...preset.ids] : [];
+        renderCommerce();
+      }
+      function toggleCommerceProduct(id) {
+        commerceState.selected = commerceState.selected.includes(id)
+          ? commerceState.selected.filter((x) => x !== id)
+          : [...commerceState.selected, id];
+        renderCommerce();
+      }
+      function renderCommerce() {
+        const c = commerceCategory();
+        $("#commercePanel").dataset.theme = commerceState.category;
+        $("#commerceHero").src = c.hero;
+        $("#commerceTitle").textContent = c.title;
+        $("#commerceSubtitle").textContent = c.subtitle;
+        $("#commerceSummary").innerHTML = `<b>${c.title}</b>${c.summary}`;
+        $("#commerceCategories").innerHTML = Object.entries(commerceCatalog).map(([key,item]) =>
+          `<button class="commerce-category ${key === commerceState.category ? "active" : ""}" data-commerce-category="${key}">${item.number} · ${item.title}</button>`
+        ).join("");
+        $("#presetList").innerHTML = c.presets.map((p,i) =>
+          `<button data-commerce-preset="${i}">${p.name}</button>`
+        ).join("");
+        $("#brandTabs").innerHTML = [`<button class="brand-chip ${commerceState.brand === "all" ? "active" : ""}" data-commerce-brand="all">全部</button>`]
+          .concat(c.brands.map((b) => `<button class="brand-chip ${commerceState.brand === b.name ? "active" : ""}" data-commerce-brand="${b.name}">${b.name}</button>`)).join("");
+        const brand = c.brands.find((b) => b.name === commerceState.brand);
+        $("#brandIntro").textContent = brand ? brand.intro : "选择品牌或单品，生成本次商务出行的推荐清单。";
+        const products = c.products.filter((p) => commerceState.brand === "all" || p.brand === commerceState.brand);
+        $("#productGrid").innerHTML = products.map((p) => {
+          const selected = commerceState.selected.includes(p.id);
+          return `<article class="product-card"><img src="${p.image}" alt="${p.name}商品类型示意图"><div class="product-copy"><span class="product-brand">${p.brand} · ${p.badge}</span><h3>${p.name}</h3><p>${p.desc}</p><div class="product-meta"><span class="product-price">${p.priceText}</span><span class="price-kind">${p.kind}</span></div><button class="add-product ${selected ? "selected" : ""}" data-commerce-product="${p.id}">${selected ? "已加入推荐" : "加入推荐"}</button></div></article>`;
+        }).join("");
+        const picked = commerceState.selected.map(commerceProduct).filter(Boolean);
+        const total = picked.reduce((sum,p) => sum + p.price, 0);
+        $("#comboName").textContent = picked.length ? `已选 ${picked.length} 项` : "尚未选择商品";
+        $("#comboItems").textContent = picked.length ? picked.map((p) => p.name).join("＋") : "可直接选择单品，也可采用快捷组合。";
+        $("#comboTotal").textContent = `¥${total}${picked.some((p) => p.kind !== "公开价") ? "起" : ""}`;
+        $$('[data-commerce-category]').forEach((b) => b.onclick = () => setCommerceCategory(b.dataset.commerceCategory));
+        $$('[data-commerce-brand]').forEach((b) => b.onclick = () => setCommerceBrand(b.dataset.commerceBrand));
+        $$('[data-commerce-preset]').forEach((b) => b.onclick = () => applyCommercePreset(Number(b.dataset.commercePreset)));
+        $$('[data-commerce-product]').forEach((b) => b.onclick = () => toggleCommerceProduct(b.dataset.commerceProduct));
+      }
+      function openCharging() { $("#chargingModal").classList.remove("hidden"); }
+
       function bindDynamic() {
         $$("[data-photo]").forEach(
           (b) => (b.onclick = () => openPhoto(b.dataset.photo)),
@@ -3041,6 +3356,7 @@
         $$("[data-publiczone]").forEach(
           (b) => (b.onclick = () => renderPublic(b.dataset.publiczone)),
         );
+        $$("[data-charge]").forEach((b) => (b.onclick = openCharging));
         $$("[data-publicmap]").forEach(
           (b) =>
             (b.onclick = (event) => {
@@ -3067,6 +3383,20 @@
       function init() {
         $("#map .map-shell > img").src = I("map.png");
         $("#map .map-shell > img").alt = "西安机场T5登机口与指廊导航图";
+        $("#solutionsLogo").src = I("logo.jpg");
+        $$("[data-solution]").forEach((b) => b.onclick = () => openCommerce(b.dataset.solution));
+        $("#closeCommerce").onclick = () => $("#commerceModal").classList.add("hidden");
+        $("#generateCombo").onclick = () => {
+          if (!commerceState.selected.length) return toast("请先选择单品或快捷组合。");
+          toast("推荐清单已生成，价格与库存请向机场门店确认。");
+        };
+        $("#chargingService").onclick = openCharging;
+        $("#closeCharging").onclick = () => $("#chargingModal").classList.add("hidden");
+        $("#chargeBack").onclick = () => $("#chargingModal").classList.add("hidden");
+        $("#chargeToSupply").onclick = () => {
+          $("#chargingModal").classList.add("hidden");
+          openCommerce("emergency");
+        };
         setOptions();
         let n = new Date(Date.now() + 90 * 60000);
         $("#boarding").value =
@@ -3107,16 +3437,20 @@
         );
         [
           "zone",
-          "arrivalZone",
+          "arrivalGate",
           "arrivalStay",
           "boarding",
           "gate",
           "buffer",
         ].forEach((id) =>
           $("#" + id).addEventListener("input", () => {
-            if (id === "arrivalZone" && state.traveller === "arrival") {
-              state.zone = $("#arrivalZone").value;
-              state.userXY = null;
+            if (id === "arrivalGate" && state.traveller === "arrival") {
+              const matchedZone = gateZone($("#arrivalGate").value);
+              if (matchedZone) {
+                state.zone = matchedZone;
+                state.userXY = null;
+                $("#zone").value = matchedZone;
+              }
             } else if (id === "zone") {
               state.zone = $("#zone").value;
               state.userXY = null;
@@ -3160,7 +3494,6 @@
           state.zone = nearestZoneKey(point);
           state.positionMode = false;
           $("#zone").value = state.zone;
-          if (state.traveller === "arrival") $("#arrivalZone").value = state.zone;
           renderAll();
           toast(`当前位置已更新为${zoneName(state.zone)}附近。`);
         };
