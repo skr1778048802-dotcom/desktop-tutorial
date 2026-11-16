@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>龙翔户型精装三维漫游</title>
+  <meta name="description" content="110㎡、121㎡端厅、121㎡方厅精装方案三维漫游与风格切换" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main id="app">
+    <header>
+      <div>
+        <span class="eyebrow">LONGXIANG · INTERIOR CONCEPT</span>
+        <h1>龙翔户型精装三维漫游</h1>
+      </div>
+      <div class="header-actions"><button id="helpBtn" class="ghost">操作说明</button></div>
+    </header>
+    <section class="toolbar">
+      <div class="seg" id="plans">
+        <button data-plan="p110" class="active">110㎡</button>
+        <button data-plan="p121square">121㎡方厅</button>
+        <button data-plan="p121end">121㎡端厅</button>
+      </div>
+      <div class="seg styles" id="styles">
+        <button data-style="cream" class="active"><i style="--c:#eadcc7"></i>奶油原木</button>
+        <button data-style="walnut"><i style="--c:#6d4b38"></i>胡桃自然</button>
+        <button data-style="greige"><i style="--c:#aaa198"></i>米灰静奢</button>
+      </div>
+    </section>
+    <section class="viewer">
+      <div id="scene">
+        <img id="tourImage" alt="精装室内沉浸式视角" draggable="false" />
+        <div id="hotspots" aria-label="空间热点导航"></div>
+        <div class="view-badge"><span id="viewName">全屋鸟瞰</span><small>写实精装视角</small></div>
+      </div>
+      <aside class="left-panel">
+        <div class="panel-title">空间视角 <span>11个节点</span></div>
+        <button data-view="overview" class="active">全屋鸟瞰</button>
+        <button data-view="elevator">出电梯视角</button>
+        <button data-view="northhall">北光厅视角</button>
+        <button data-view="living">进入客厅</button>
+        <button data-view="dining">进入餐厅</button>
+        <button data-view="master">进入主卧</button>
+        <button data-view="masterout">主卧向外看</button>
+        <button data-view="bed2out">次卧向外看</button>
+        <button data-view="childout">儿童房向外看</button>
+        <button data-view="multiout">多功能房向外看</button>
+        <button data-view="terrace">查看露台</button>
+        <button id="walkBtn">开始顺序漫游</button>
+      </aside>
+      <aside class="right-panel">
+        <div class="panel-title">沉浸设置</div>
+        <label><input id="hotspotToggle" type="checkbox" checked> 空间热点</label>
+        <label><input id="fullToggle" type="checkbox"> 沉浸全屏</label>
+        <label><input id="nightToggle" type="checkbox"> 暖光氛围</label>
+      </aside>
+      <div class="status"><span id="statusTitle">110㎡ · 奶油原木</span><small>拖动观察 · WASD移动/转向 · 滚轮缩放</small></div>
+      <div class="key-guide" aria-label="键盘操作"><kbd>W</kbd><span>前进</span><kbd>A</kbd><span>左转</span><kbd>S</kbd><span>后退</span><kbd>D</kbd><span>右转</span></div>
+      <div id="walkHint" class="walk-hint">已开启自动漫游 · 点击任意空间可暂停</div>
+    </section>
+    <section class="content">
+      <div class="copy">
+        <span class="eyebrow">DESIGN NOTES</span>
+        <h2 id="planName">110㎡四房两厅三卫</h2>
+        <p id="planDesc">以横向客餐厅为家庭核心，主卧与儿童房分置两侧；保留多功能书房、亲子互动区以及独立电梯厅关系。</p>
+        <div class="chips"><span>层高 2.8m</span><span>方案级比例还原</span><span>三套材质预设</span></div>
+      </div>
+      <div class="render-card">
+        <img id="renderImage" src="./assets-web/render-110.webp" alt="当前户型精装三维鸟瞰预览" />
+        <div><strong>高清精装鸟瞰</strong><span>结构以项目方平面图为依据</span></div>
+      </div>
+      <div class="plan-card">
+        <img id="planImage" src="./assets-web/plan-110.webp" alt="当前户型原始平面图" />
+        <div><strong>原始户型图</strong><span>用于核对墙体与功能分区</span></div>
+      </div>
+    </section>
+  </main>
+  <dialog id="helpDialog">
+    <button id="closeHelp">×</button>
+    <h3>如何查看</h3>
+    <p>电脑端可在画面上左右拖动，滚轮缩放；按 W 前进到相邻空间、S 返回上一空间、A/D 左右转向观察。手机端单指拖动，点击热点或底部视角栏前进。</p>
+    <p>每套户型包含全屋鸟瞰、出电梯、北光厅、客厅、餐厨、主卧、四个卧室向外看及露台，共11个写实精装节点。开启“顺序漫游”后会自动依次浏览。</p>
+    <small>提示：原图未提供完整施工尺寸，本模型用于装修方案比较，不作为施工图。</small>
+  </dialog>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

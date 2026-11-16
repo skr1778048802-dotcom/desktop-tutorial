@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#101519">
+  <title>联发·嘉和长安｜五户型精装三维漫游</title>
+  <meta name="description" content="联发嘉和长安95、115、125双户型与139平方米精装三维漫游">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">LF</span>
+        <div><small>LIANFA · JIAHE CHANG'AN</small><h1>五户型精装三维漫游</h1></div>
+      </div>
+      <div class="top-actions"><button id="compareBtn" class="ghost">户型核对</button><button id="helpBtn" class="ghost">操作说明</button></div>
+    </header>
+
+    <nav id="planTabs" class="plan-tabs" aria-label="选择户型">
+      <button data-plan="95" class="active"><strong>95㎡</strong><span>轻盈北欧</span></button>
+      <button data-plan="115"><strong>115㎡</strong><span>深色静奢</span></button>
+      <button data-plan="125-1"><strong>125㎡ A</strong><span>浅米侘寂</span></button>
+      <button data-plan="125-2"><strong>125㎡ B</strong><span>复古现代</span></button>
+      <button data-plan="139"><strong>139㎡</strong><span>现代新中式</span></button>
+    </nav>
+
+    <main>
+      <section class="tour-wrap">
+        <aside class="view-list">
+          <div class="aside-head"><span>漫游节点</span><b id="nodeCount">8</b></div>
+          <div id="viewButtons"></div>
+          <button id="autoBtn" class="auto-btn">▶ 顺序漫游</button>
+        </aside>
+
+        <div id="scene" class="scene">
+          <div class="scene-image-wrap"><img id="tourImage" draggable="false" alt="当前户型精装漫游视角"></div>
+          <div id="hotspots" class="hotspots"></div>
+          <div class="scene-topline"><span id="planBadge">95㎡</span><i></i><span id="styleBadge">轻盈北欧</span></div>
+          <div class="scene-caption"><div><small id="viewIndex">01 / 08</small><strong id="viewTitle">全屋三维俯视</strong></div><p id="viewNote">三房动线与南向客餐厅关系</p></div>
+          <div class="drag-tip">↔ 拖动旋转 · WASD移动 · 滚轮缩放</div>
+          <div class="mobile-arrows"><button id="prevBtn">‹</button><button id="nextBtn">›</button></div>
+        </div>
+
+        <aside class="style-panel">
+          <div class="aside-head"><span>本户型专属精装</span></div>
+          <h2 id="styleName">雾蓝浅木 · 轻盈北欧</h2>
+          <p id="styleDesc"></p>
+          <div id="palette" class="palette"></div>
+          <dl id="materials" class="materials"></dl>
+          <div class="controls">
+            <label><input type="checkbox" id="warmToggle"> 暖光氛围</label>
+            <label><input type="checkbox" id="fullToggle"> 沉浸全屏</label>
+          </div>
+        </aside>
+      </section>
+
+      <section class="details">
+        <article class="plan-copy">
+          <span class="eyebrow">PLAN-SPECIFIC DESIGN</span>
+          <h2 id="planName">95㎡四房两厅两卫</h2>
+          <p id="planDesc"></p>
+          <div id="identityChips" class="chips"></div>
+        </article>
+        <figure class="compare-card"><img id="overviewImage" alt="三维俯视图"><figcaption><strong>三维布局对应</strong><span>按当前户型结构单独生成</span></figcaption></figure>
+        <figure class="compare-card"><img id="planImage" alt="原始户型图"><figcaption><strong>原始户型依据</strong><span>墙体、入口与功能分区核对</span></figcaption></figure>
+      </section>
+
+      <section class="difference">
+        <div><span class="eyebrow">FIVE DISTINCT HOMES</span><h2>不是同一套效果图换颜色</h2></div>
+        <p>五套分别锁定入口位置、花园形态、客餐厅轴线、卧室方向与专属材质。切换户型时，空间和家具系统会同时变化。</p>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="helpDialog">
+    <button class="dialog-close" data-close="helpDialog">×</button><h3>漫游操作</h3>
+    <p><b>电脑：</b>按住画面左右拖动观察；W / S 前后切换空间，A / D 左右转向，滚轮缩放。</p>
+    <p><b>手机：</b>单指左右滑动观察，点击画面两侧箭头或空间节点切换。</p>
+    <p><b>说明：</b>当前为户型与精装概念对应展示，装修效果以平面图空间关系为约束，不作为施工放样图。</p>
+  </dialog>
+  <dialog id="compareDialog">
+    <button class="dialog-close" data-close="compareDialog">×</button><h3 id="compareTitle">95㎡ 户型核对</h3>
+    <div class="dialog-compare"><figure><img id="dialogPlan"><figcaption>原始户型图</figcaption></figure><figure><img id="dialogOverview"><figcaption>对应三维俯视</figcaption></figure></div>
+  </dialog>
+  <script src="./app.js"></script>
+</body>
+</html>
