@@ -1,0 +1,44 @@
+name: Publish 3D tour sites
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-tours.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download high quality tour packages
+        run: |
+          set -euo pipefail
+          rm -rf longxiang-tour lianfa-tour
+          mkdir -p longxiang-tour lianfa-tour
+          curl --fail --location --retry 4 --retry-delay 3 \
+            https://longxiang-interior-3d.skr1778048802.chatgpt.site/site-package.zip \
+            -o /tmp/longxiang.zip
+          curl --fail --location --retry 4 --retry-delay 3 \
+            https://lianfa-jiahe-changan-tour.skr1778048802.chatgpt.site/site-package.zip \
+            -o /tmp/lianfa.zip
+          unzip -q /tmp/longxiang.zip -d longxiang-tour
+          unzip -q /tmp/lianfa.zip -d lianfa-tour
+          rm -f longxiang-tour/site-package.zip lianfa-tour/site-package.zip
+          touch .nojekyll
+      - name: Commit published sites
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add .nojekyll longxiang-tour lianfa-tour
+          if git diff --cached --quiet; then
+            echo 'No changes to publish'
+          else
+            git commit -m 'Publish high quality 3D tours [skip ci]'
+            git push
+          fi
